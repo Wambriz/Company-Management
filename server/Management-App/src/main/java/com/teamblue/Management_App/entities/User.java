@@ -3,13 +3,12 @@ package com.teamblue.Management_App.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
 @Entity
+@Table(name = "user_table")
 @Data
 @NoArgsConstructor
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,23 +16,26 @@ public class User {
 
     private String username;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String first;
+    private String last;
     private String email;
     private String phone;
-    private boolean active;
-    private boolean admin;
+    private Boolean active;
+    private Boolean admin;
     private String status;
 
-    // TODO: Map relationship to announcements
-    // @OneToMany
+    @OneToMany(mappedBy = "author")
     private Set<Announcements> announcements;
 
-    // TODO: Map relationship to announcements
-    // @OneToMany
+    @OneToMany(mappedBy = "user")
     private Set<UserCompany> userCompanies;
 
-    // TODO: Map many to many
-    // @ManyToMany
+    @ManyToMany
+    @JoinTable(
+            name = "user_team_table",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
     private Set<Team> teams;
 }
+
