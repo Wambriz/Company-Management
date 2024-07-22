@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TeamDto } from './models';
+import { ProjectDto, TeamDto } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +67,62 @@ export class BackendService {
     ]
   }
 
+  team1Projects: ProjectDto[] = [ //3 projects. This is the kind of response we will recieve from our get projects enpoint: A list of projects
+    {
+      id: 9,
+      name: "Our Sign Is B",
+      description: "Hit Single",
+      active: false,
+      team: this.team1 //Typically, this team attribute would have the JSON notation of a TeamDto, we are just using our dummy variable for readability
+    },
+    {
+      id: 10,
+      name: "Star T Rain",
+      description: "Fan Favorite",
+      active: false,
+      team: this.team1
+    }, 
+    {
+      id: 11,
+      name: "Super Motor",
+      description: "Cult Classic",
+      active: false,
+      team: this.team1
+    }
+  ];
+
+  team2Projects: ProjectDto[] = [ //4 Projects
+    {
+      id: 12,
+      name: "Operation Overlord",
+      description: "Turning Point",
+      active: false,
+      team: this.team2
+    },
+    {
+      id: 13,
+      name: "Operation Market Garden",
+      description: "Unsuccesful project",
+      active: false,
+      team: this.team2
+    }, 
+    {
+      id: 14,
+      name: "Battle of the Bulge",
+      description: "Desperate Defense",
+      active: false,
+      team: this.team2
+    }, 
+    {
+      id: 15,
+      name: "Brecourt Manor",
+      description: "Premier Example",
+      active: false,
+      team: this.team2
+    }
+  ];
+
+
   constructor() { }
   //This is where we will communicate with our backend and perform other services like unpacking DTOs into our models
   getDummyTeam1(): TeamDto { //Function signature: name(): return-type {do stuff}
@@ -75,5 +131,16 @@ export class BackendService {
 
   getDummyTeam2(): TeamDto {
     return this.team2;
+  }
+
+  getTeamProjects(team: TeamDto): ProjectDto[] { //Fetches team projects based on given TeamDto
+    //Simply returns dummy data. In real version, we would make a call to API here.
+    if (team === this.team1) {
+      return this.team1Projects;
+    } else if (team === this.team2) {
+      return this.team2Projects
+    } else {
+      return [];
+    }
   }
 }
