@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TeamsComponent } from './teams/teams.component';
 import { TeamCardComponent } from './teams/team-card/team-card.component';
+import { LoginComponent } from './login/login.component';
+import { SelectCompanyComponent } from './select-company/select-company.component';
+import { HomeAnnouncmentsComponent } from './home-announcments/home-announcments.component';
 import { CreateTeamCardComponent } from './teams/create-team-card/create-team-card.component';
 
 @NgModule({
@@ -12,6 +15,10 @@ import { CreateTeamCardComponent } from './teams/create-team-card/create-team-ca
     AppComponent,
     TeamsComponent,
     TeamCardComponent,
+    AppComponent,
+    LoginComponent,
+    SelectCompanyComponent,
+    HomeAnnouncmentsComponent,
     CreateTeamCardComponent
   ],
   imports: [
