@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "user_table")
 @Data
@@ -14,12 +15,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String password;
-    private String first;
-    private String last;
-    private String email;
-    private String phone;
+    @Embedded
+    private Profile profile;
+    
+    @Embedded
+    private Credentials credentials;
+    
     private Boolean active;
     private Boolean admin;
     private String status;
