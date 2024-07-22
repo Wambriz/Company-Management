@@ -36,7 +36,7 @@ export class LoginComponent {
       next: (user: FullUserDto) => {
         localStorage.setItem('user', JSON.stringify(user)); //Saves User to localStorage -Devin
         if (user.isAdmin) {
-          this.router.navigate(['/select-company']); //Navagate to the corrent page based on if the user is an admin or not.
+          this.router.navigate(['/select-company']); //Navagate to the corrent page based on if the user is an admin or not. -Devin
         } else {
           this.router.navigate(['/home-announcements']);
         }

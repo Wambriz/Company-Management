@@ -9,6 +9,37 @@ import { CredentialsDto, FullUserDto } from './models';
 })
 export class BackendService {
 
+  private backendUrl = 'http://localhost:4200/';
+
+  constructor(private http: HttpClient) {}
+
+  //This is where we will communicate with our backend and perform other services like unpacking DTOs into our models
+  getDummyTeam1(): TeamDto { //Function signature: name(): return-type {do stuff}
+    return this.team1;
+  }
+
+  getDummyTeam2(): TeamDto {
+    return this.team2;
+  }
+
+  getTeamProjects(team: TeamDto): ProjectDto[] { //Fetches team projects based on given TeamDto
+    //Simply returns dummy data. In real version, we would make a call to API here.
+    if (team === this.team1) {
+      return this.team1Projects;
+    } else if (team === this.team2) {
+      return this.team2Projects
+    } else {
+      return [];
+    }
+  }
+
+  login(credentials: CredentialsDto): Observable<FullUserDto> {
+    return this.http.post<FullUserDto>(
+      this.backendUrl + 'users/login',
+      credentials
+    );
+  }
+
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
   //Example of insantiating an object from our models:
   team1: TeamDto = { // FORMAT: name: type = (data)
@@ -125,33 +156,4 @@ export class BackendService {
     }
   ];
 
-  private backendUrl = 'http://localhost:4200/';
-
-  constructor(private http: HttpClient) {}
-  //This is where we will communicate with our backend and perform other services like unpacking DTOs into our models
-  getDummyTeam1(): TeamDto { //Function signature: name(): return-type {do stuff}
-    return this.team1;
-  }
-
-  getDummyTeam2(): TeamDto {
-    return this.team2;
-  }
-
-  getTeamProjects(team: TeamDto): ProjectDto[] { //Fetches team projects based on given TeamDto
-    //Simply returns dummy data. In real version, we would make a call to API here.
-    if (team === this.team1) {
-      return this.team1Projects;
-    } else if (team === this.team2) {
-      return this.team2Projects
-    } else {
-      return [];
-    }
-  }
-
-  login(credentials: CredentialsDto): Observable<FullUserDto> {
-    return this.http.post<FullUserDto>(
-      this.backendUrl + 'users/login',
-      credentials
-    );
-  }
 }
