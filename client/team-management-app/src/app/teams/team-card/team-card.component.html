@@ -1,1 +1,12 @@
-<p>team-card works!</p>
+<div class="team-container" *ngFor="let team of listOfTeams"> <!--Iterating through the lists of teams we fetched from the backend-->
+    <div class="team-title">
+        <p>Team Name: {{team.name}}</p>
+        <p># of Projects: {{getProjectCountByTeamDto(team)}}</p>
+    </div>
+    <div class="team-body">
+        <p>Members:</p>
+        <div class="team-members" *ngFor="let member of team.users"> <!--Iterating through the list of users for the current team-->
+            <p>{{member.profile.firstname}} {{member.profile.lastname}}</p>
+        </div>
+    </div>
+</div>
