@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProjectDto, TeamDto } from './models';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { delay, Observable, of, throwError } from 'rxjs';
 import { CredentialsDto, FullUserDto } from './models';
 
 @Injectable({
@@ -33,12 +33,14 @@ export class BackendService {
     }
   }
 
-  login(credentials: CredentialsDto): Observable<FullUserDto> {
-    return this.http.post<FullUserDto>(
-      this.backendUrl + 'users/login',
-      credentials
-    );
-  }
+  // WARNING!!!! DO NOT DELETE! REAL LOGIN METHOD TO BE USED ONCE BACKEND IS EMPLAMENTED
+
+  // login(credentials: CredentialsDto): Observable<FullUserDto> {
+  //   return this.http.post<FullUserDto>(
+  //     this.backendUrl + 'users/login',
+  //     credentials
+  //   );
+  // }
 
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
   //Example of insantiating an object from our models:
@@ -155,5 +157,38 @@ export class BackendService {
       team: this.team2
     }
   ];
+
+  // Devin test block
+  //
+  //POST /users/login test
+  private mockAdmin: FullUserDto = {
+    id: 1,
+    profile: { firstname: "Ai", lastname: "Hoshino", email: "hoshino.ai@bkomachi.com", phone: "5555551234" }, //User profile stollen from Josue =)
+    isAdmin: true,
+    active: true,
+    status: 'active',
+    companies: [],
+    teams: []
+  };
+
+  private mockUser: FullUserDto = {
+    id: 1,
+    profile: { firstname: "Aqua", lastname: "Hoshino", email: "hoshino.aqua@bkomachi.com", phone: "5555552345" }, //User profile stollen from Josue =)
+    isAdmin: false,
+    active: true,
+    status: 'active',
+    companies: [],
+    teams: []
+  };
+
+  login(credentials: CredentialsDto): Observable<FullUserDto> {
+    if (credentials.username === 'admin' && credentials.password === 'password') {
+      return of(this.mockAdmin).pipe(delay(1000)); // Simulate network delay
+    } if (credentials.username === 'user' && credentials.password === 'password') {
+      return of(this.mockUser).pipe(delay(1000)); // Simulate network delay
+    } else {
+      return throwError(() => new Error('Invalid username or password')).pipe(delay(1000));
+    }
+  }
 
 }
