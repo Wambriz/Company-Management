@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { HomeAnnouncmentsComponent } from './home-announcments/home-announcments.component';
 import { CreateTeamCardComponent } from './teams/create-team-card/create-team-card.component';
+import { TeamCreationPopupComponent } from './teams/team-creation-popup/team-creation-popup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,14 @@ import { CreateTeamCardComponent } from './teams/create-team-card/create-team-ca
     LoginComponent,
     SelectCompanyComponent,
     HomeAnnouncmentsComponent,
-    CreateTeamCardComponent
+    CreateTeamCardComponent,
+    TeamCreationPopupComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration()

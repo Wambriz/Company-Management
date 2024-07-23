@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ProjectDto, TeamDto } from './models';
+import { CompanyDto, FullUserDto, ProjectDto, TeamDto, TeamRequestDto } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -122,15 +122,91 @@ export class BackendService {
     }
   ];
 
+  //New Company of Dummy Data
+  company2: CompanyDto = {
+    id: 16,
+    name: "Screaming Eagles",
+    description: "A Company about Mil-Tech",
+    teams: [this.team2],
+    users: [ //users is an array of Basic User DTOs, which is represnted as a JSON object of our basic user DTO
+      { //BasicUserDto 1
+        id: 6,
+        profile: {firstname: "Richard", lastname: "Winters", email: "richard.winters@101st.com", phone: "1234569999"}, //ProfileDto of BasicUserDto 1
+        isAdmin: false,
+        active: true,
+        status: "Active"
+      },
+      { //BasicUserDto 2
+        id: 7,
+        profile: {firstname: "Herbert", lastname: "Sobel", email: "herber.sobel@101st.com", phone: "1234568888"}, //ProfileDto of BasicUserDto 1
+        isAdmin: false,
+        active: true,
+        status: "Active"
+      },
+      { //BasicUserDto 3
+        id: 8,
+        profile: {firstname: "Robert", lastname: "Sink", email: "robert.sink@101st.com", phone: "1234567777"}, //ProfileDto of BasicUserDto 1
+        isAdmin: true,
+        active: true,
+        status: "Active"
+      },
+    ]
+  }
+
+  company2TeamMembers: FullUserDto[] = [ //Create list of company members of dummy data to make members of project.
+    { //FullUserDto 1
+      id: 6,
+      profile: {firstname: "Richard", lastname: "Winters", email: "richard.winters@101st.com", phone: "1234569999"}, //ProfileDto of BasicUserDto 1
+      isAdmin: false,
+      active: true,
+      status: "Active",
+      companies: [
+        this.company2
+      ],
+      teams: [
+        this.team2
+      ]
+    },
+    { //FullUserDto 2
+      id: 7,
+      profile: {firstname: "Herbert", lastname: "Sobel", email: "herber.sobel@101st.com", phone: "1234568888"}, //ProfileDto of BasicUserDto 1
+      isAdmin: false,
+      active: true,
+      status: "Active",
+      companies: [
+        this.company2
+      ],
+      teams: [
+        this.team2
+      ]
+    },
+    { //FullUserDto 3
+      id: 8,
+      profile: {firstname: "Robert", lastname: "Sink", email: "robert.sink@101st.com", phone: "1234567777"}, //ProfileDto of BasicUserDto 1
+      isAdmin: true,
+      active: true,
+      status: "Active",
+      companies: [
+        this.company2
+      ],
+      teams: [
+        this.team2
+      ]
+    },
+  ]
+
+  listOfDummyTeams: TeamDto[] = [this.team1, this.team2]
 
   constructor() { }
   //This is where we will communicate with our backend and perform other services like unpacking DTOs into our models
-  getDummyTeam1(): TeamDto { //Function signature: name(): return-type {do stuff}
-    return this.team1;
+  
+  //Add a new team to the list of teams
+  addDummyTeam(newTeam: TeamDto): void {
+    this.listOfDummyTeams.push(newTeam);
   }
 
-  getDummyTeam2(): TeamDto {
-    return this.team2;
+  getListOfDummyTeams(): TeamDto[] {
+    return this.listOfDummyTeams;
   }
 
   getTeamProjects(team: TeamDto): ProjectDto[] { //Fetches team projects based on given TeamDto
@@ -142,5 +218,23 @@ export class BackendService {
     } else {
       return [];
     }
+  }
+
+  getActiveMembers(): FullUserDto[] { //Later, this method should accept a company ID when making request to backend for active members of a company
+    return this.company2TeamMembers
+  }
+
+  createTeam(newTeamRequestDto: TeamRequestDto): void {
+    //Here we would communicate with out endpoint, receive a proper TeamDto in return, and THEN add it to our list of teams
+
+    //For now, pretend to do that by manually creating a new TeamDto
+    const newTeamDto: TeamDto = {
+      id: 999,
+      name: newTeamRequestDto.name,
+      description: newTeamRequestDto.description,
+      users: newTeamRequestDto.users,
+    }
+
+    this.addDummyTeam(newTeamDto) //Adding our TeamDto response from the database to our list of teams
   }
 }

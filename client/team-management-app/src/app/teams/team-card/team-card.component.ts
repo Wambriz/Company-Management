@@ -14,8 +14,7 @@ listOfTeams: TeamDto[] = []; //This will represent all of the teams fetched from
 //INFO: TeamDto comes with id, name, description, and a list of users[], which are a list of [BasicUserDto]
 //INFO: BasicUserDto comes with id, ProfileDto{}, isAdmin, active, and status
 constructor(private backendService: BackendService) {
-  this.listOfTeams.push(this.backendService.getDummyTeam1()) //Initializing team variables via service (dummy data for now)
-  this.listOfTeams.push(this.backendService.getDummyTeam2())
+  this.listOfTeams = this.backendService.getListOfDummyTeams() //Initializing team variables via service (dummy data for now)
 }
 
 ngOnInit(): void { //OnInit actions here
