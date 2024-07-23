@@ -66,6 +66,13 @@ export class BackendService {
     return this.http.post<AnnouncementDto>(url, announcement);
   }
 
+  getUsers(): Observable<FullUserDto[]> {
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!);
+    const id = selectedCompany.id;
+    const url = `${this.backendUrl}company/${id}/users`;
+    return this.http.get<FullUserDto[]>(url);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
@@ -478,4 +485,3 @@ export class BackendService {
     this.currentTeam = teamDto;
   }
 }
-

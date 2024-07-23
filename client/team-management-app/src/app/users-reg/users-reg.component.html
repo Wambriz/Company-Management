@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+<div>
+    <h1>User Registry</h1>
+    <p>A general view of all your team members in your organization</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Active</th>
+          <th>Admin</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.profile.firstname }} {{ user.profile.lastname }}</td>
+          <td>{{ user.profile.email }}</td>
+          <td>{{ user.active }}</td>
+          <td>{{ user.isAdmin }}</td>
+          <td>{{ user.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
