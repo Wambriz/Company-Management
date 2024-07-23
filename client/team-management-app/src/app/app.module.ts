@@ -3,10 +3,6 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TeamProjectsComponent } from './team-projects/team-projects.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AnnouncementFormComponent } from './home-announcements/announcement-form/announcement-form.component';
+import { UsersRegComponent } from './users-reg/users-reg.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +27,7 @@ const routes: Routes = [
   { path: 'home-announcements', component: HomeAnnouncementsComponent },
   { path: 'teams', component: TeamsComponent },
   { path: 'projects', component: TeamProjectsComponent },
+  { path: 'users-reg', component: UsersRegComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
@@ -47,7 +45,8 @@ const routes: Routes = [
     NavbarComponent,
     TeamProjectsComponent,
     TeamCreationPopupComponent,
-    AnnouncementFormComponent
+    AnnouncementFormComponent,
+    UsersRegComponent
   ],
   imports: [
     BrowserModule,
@@ -57,10 +56,6 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
   ],
   providers: [
     provideClientHydration(),
