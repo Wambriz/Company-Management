@@ -18,11 +18,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public FullUserDto login(CredentialsDto credentialsDto) {
-        User user = userRepository.findByEmail(credentialsDto.getEmail());
-        if (user == null || !user.getPassword().equals(credentialsDto.getPassword()) || !user.getActive()) {
+    	System.out.println("CREDS: "+ credentialsDto + credentialsDto.getUsername());
+        User user = userRepository.findByCredentialsUsername(credentialsDto.getUsername());
+        System.out.println("ASSIGNED TO USER: "+ userRepository.findByCredentialsUsername(credentialsDto.getUsername()));
+        if (user == null || !user.getCredentials().getPassword().equals(credentialsDto.getPassword()) || !user.getActive()) {
             throw new IllegalArgumentException("Invalid credentials or inactive user");
         }
+        System.out.println("USER:");
+        System.out.println(user);
+        System.out.println(userMapper.entityToDto(user));
         return userMapper.entityToDto(user);
+//    	return null;
     }
 }
 

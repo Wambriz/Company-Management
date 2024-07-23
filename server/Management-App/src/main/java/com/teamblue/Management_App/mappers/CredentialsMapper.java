@@ -5,8 +5,11 @@ import com.teamblue.Management_App.entities.Credentials;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CredentialsMapper {
-
+	Credentials requestDtoToEntity (CredentialsDto credentialsDto);
+	
+	CredentialsDto responseDtoToEntity(Credentials entity);
+	
 
 }

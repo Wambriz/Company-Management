@@ -38,28 +38,37 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void seedUsers() {
         User user1 = new User();
-        user1.setUsername("johndoe");
-        user1.setPassword("password123");
-        user1.setFirst("John");
-        user1.setLast("Doe");
-        user1.setEmail("john.doe@example.com");
-        user1.setPhone("123-456-7890");
+        Credentials creds1 = new Credentials();
+        creds1.setUsername("johndoe");
+        creds1.setPassword("password123");
+        
+        user1.setCredentials(creds1);
+        
+        Profile p1 = new Profile();
+        
+
+        p1.setFirstname("John");
+        p1.setLastname("Doe");
+        p1.setEmail("john.doe@example.com");
+        p1.setPhone("123-456-7890");
+        
+        user1.setProfile(p1);
         user1.setActive(true);
         user1.setAdmin(false);
         user1.setStatus("active");
 
-        User user2 = new User();
-        user2.setUsername("janedoe");
-        user2.setPassword("password123");
-        user2.setFirst("Jane");
-        user2.setLast("Doe");
-        user2.setEmail("jane.doe@example.com");
-        user2.setPhone("098-765-4321");
-        user2.setActive(true);
-        user2.setAdmin(true);
-        user2.setStatus("active");
-
-        userRepository.saveAll(List.of(user1, user2));
+//        User user2 = new User();
+//        user2.setUsername("janedoe");
+//        user2.setPassword("password123");
+//        user2.setFirst("Jane");
+//        user2.setLast("Doe");
+//        user2.setEmail("jane.doe@example.com");
+//        user2.setPhone("098-765-4321");
+//        user2.setActive(true);
+//        user2.setAdmin(true);
+//        user2.setStatus("active");
+        userRepository.save(user1);
+        //userRepository.saveAll(List.of(user1, user2));
     }
 
     private void seedCompanies() {

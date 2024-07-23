@@ -17,12 +17,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String password;
-    private String first;
-    private String last;
-    private String email;
-    private String phone;
+    @Embedded
+    private Credentials credentials;
+    
+    @Embedded
+    private Profile profile;
+    
+//    private String username;
+//    private String password;
+//    private String first;
+//    private String last;
+//    private String email;
+//    private String phone;
     private Boolean active;
     private Boolean admin;
     private String status;
