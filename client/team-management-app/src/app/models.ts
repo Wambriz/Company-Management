@@ -41,6 +41,12 @@ export interface TeamDto {
   users: BasicUserDto[];
 }
 
+export interface TeamRequestDto { //CREATE ENDPOINT SUPPORT(As this request does not come with an auto generated ID)
+  name: string;
+  description: string;
+  users: BasicUserDto[];
+}
+
 export interface CompanyDto {
   id: number;
   name: string;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { HomeAnnouncementsComponent } from './home-announcements/home-announcements.component';
 import { CreateTeamCardComponent } from './teams/create-team-card/create-team-card.component';
+import { TeamCreationPopupComponent } from './teams/team-creation-popup/team-creation-popup.component';
 import { BackendService } from './backend.service';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -30,12 +31,14 @@ const routes: Routes = [
     LoginComponent,
     SelectCompanyComponent,
     HomeAnnouncementsComponent,
-    CreateTeamCardComponent
+    CreateTeamCardComponent,
+    TeamCreationPopupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
