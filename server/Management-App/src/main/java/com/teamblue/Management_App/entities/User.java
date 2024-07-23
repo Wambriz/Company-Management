@@ -23,12 +23,6 @@ public class User {
     @Embedded
     private Profile profile;
     
-//    private String username;
-//    private String password;
-//    private String first;
-//    private String last;
-//    private String email;
-//    private String phone;
     private Boolean active;
     private Boolean admin;
     private String status;

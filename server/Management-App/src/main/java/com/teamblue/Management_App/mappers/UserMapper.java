@@ -8,12 +8,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-//@Mapper(componentModel = "spring")
 @Mapper(componentModel = "spring", uses = {ProfileMapper.class, CredentialsMapper.class})
-//@Mapper
+
 public interface UserMapper {
-//	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-	
+
 //	@Mapping(target="username", source="credentials.username")
     FullUserDto entityToDto(User entity);
 	

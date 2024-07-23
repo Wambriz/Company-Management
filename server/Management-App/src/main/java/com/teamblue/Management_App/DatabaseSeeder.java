@@ -39,7 +39,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private void seedUsers() {
         User user1 = new User();
         Credentials creds1 = new Credentials();
-        creds1.setUsername("johndoe");
+        creds1.setUsername("john.doe@example.com");
         creds1.setPassword("password123");
         
         user1.setCredentials(creds1);
@@ -57,18 +57,24 @@ public class DatabaseSeeder implements CommandLineRunner {
         user1.setAdmin(false);
         user1.setStatus("active");
 
-//        User user2 = new User();
-//        user2.setUsername("janedoe");
-//        user2.setPassword("password123");
-//        user2.setFirst("Jane");
-//        user2.setLast("Doe");
-//        user2.setEmail("jane.doe@example.com");
-//        user2.setPhone("098-765-4321");
-//        user2.setActive(true);
-//        user2.setAdmin(true);
-//        user2.setStatus("active");
-        userRepository.save(user1);
-        //userRepository.saveAll(List.of(user1, user2));
+        
+        Credentials creds2 = new Credentials();
+        Profile p2 = new Profile();
+        User user2 = new User();
+        creds2.setUsername("jane.doe@example.com");
+        creds2.setPassword("password123");
+        p2.setFirstname("Jane");
+        p2.setLastname("Doe");
+        p2.setEmail("jane.doe@example.com");
+        p2.setPhone("098-765-4321");
+        
+        user2.setCredentials(creds2);
+        user2.setProfile(p2);
+        user2.setActive(true);
+        user2.setAdmin(true);
+        user2.setStatus("active");
+//        userRepository.save(user1);
+        userRepository.saveAll(List.of(user1, user2));
     }
 
     private void seedCompanies() {
