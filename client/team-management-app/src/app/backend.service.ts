@@ -9,6 +9,7 @@ import {
   ProjectDto,
   TeamDto,
   TeamRequestDto,
+  CreateAnnouncementDto
 } from './models';
 
 @Injectable({
@@ -59,6 +60,11 @@ export class BackendService {
   //     (error) => console.error('Error fetching announcements', error)
   //   ); return announcements;
   // }
+
+  createAnnouncement(id: number, announcement: CreateAnnouncementDto): Observable<AnnouncementDto> {
+    const url = this.backendUrl + `company/${id}/announcement`;
+    return this.http.post<AnnouncementDto>(url, announcement);
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -472,3 +478,4 @@ export class BackendService {
     this.currentTeam = teamDto;
   }
 }
+

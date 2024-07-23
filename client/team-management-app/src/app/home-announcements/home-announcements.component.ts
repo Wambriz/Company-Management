@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AnnouncementDto, CompanyDto } from '../models';
+import { AnnouncementDto, CompanyDto, FullUserDto } from '../models';
 import { BackendService } from '../backend.service';
+import { AnnouncementFormComponent } from './announcement-form/announcement-form.component';
 
 @Component({
   selector: 'app-home-announcements',
@@ -9,6 +10,7 @@ import { BackendService } from '../backend.service';
 })
 export class HomeAnnouncementsComponent implements OnInit {
   announcements: AnnouncementDto[] = [];
+  showForm: boolean = false;
 
   constructor(
     private backendService: BackendService
@@ -24,4 +26,11 @@ export class HomeAnnouncementsComponent implements OnInit {
     }
   }
 
+  openForm() {
+    this.showForm = true;
+  }
+
+  closeForm() {
+    this.showForm = false;
+  }
 }
