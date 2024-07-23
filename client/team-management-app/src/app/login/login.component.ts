@@ -15,7 +15,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: BackendService,
+    private backendService: BackendService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -32,7 +32,7 @@ export class LoginComponent {
 
     const credentials: CredentialsDto = this.loginForm.value;
 
-    this.loginService.login(credentials).subscribe({
+    this.backendService.login(credentials).subscribe({
       next: (user: FullUserDto) => {
         localStorage.setItem('user', JSON.stringify(user)); //Saves User to localStorage -Devin
         if (user.isAdmin) {

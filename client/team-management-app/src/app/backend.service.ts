@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProjectDto, TeamDto } from './models';
 import { HttpClient } from '@angular/common/http';
 import { delay, Observable, of, throwError } from 'rxjs';
-import { CredentialsDto, FullUserDto } from './models';
+import { CredentialsDto, FullUserDto, AnnouncementDto } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +34,22 @@ export class BackendService {
     }
   }
 
-  // WARNING!!!! DO NOT DELETE! REAL LOGIN METHOD TO BE USED ONCE BACKEND IS EMPLAMENTED////////////////////////////////////////////////////////
+  // WARNING!!!! DO NOT DELETE! REAL LOGIN AND FETCH ANNOUNCEMENTS METHODS TO BE USED ONCE BACKEND IS EMPLAMENTED////////////////////////////////
 
   // login(credentials: CredentialsDto): Observable<FullUserDto> {
   //   return this.http.post<FullUserDto>(
   //     this.backendUrl + 'users/login',
   //     credentials
   //   );
+  // }
+
+  // fetchAnnouncements(companyId: number): AnnouncementDto[] {
+  //   const url = this.backendUrl + `company/${companyId}/announcements`;
+  //   let announcements: AnnouncementDto[] = [];
+  //   this.http.get<AnnouncementDto[]>(url).subscribe(
+  //     (data) => (announcements = data),
+  //     (error) => console.error('Error fetching announcements', error)
+  //   ); return announcements;
   // }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,7 +237,7 @@ export class BackendService {
       {
         id: 2,
         name: "Lee's",
-        description: "We fix cars",
+        description: 'We fix cars',
         teams: [],
         users: [],
       },
@@ -251,6 +260,45 @@ export class BackendService {
     teams: [],
   };
 
+  private mockAnnouncements: AnnouncementDto[] = [
+    {
+      id: 1,
+      date: new Date().getTime(),
+      title: 'Announcement 1',
+      message: 'This is the first announcement.',
+      author: {
+        id: 1,
+        profile: {
+          firstname: 'John',
+          lastname: 'Doe',
+          email: 'john.doe@example.com',
+          phone: '123-456-7890',
+        },
+        isAdmin: true,
+        active: true,
+        status: 'Active',
+      },
+    },
+    {
+      id: 2,
+      date: new Date().getTime(),
+      title: 'Announcement 2',
+      message: 'This is the second announcement.',
+      author: {
+        id: 2,
+        profile: {
+          firstname: 'Jane',
+          lastname: 'Smith',
+          email: 'jane.smith@example.com',
+          phone: '987-654-3210',
+        },
+        isAdmin: false,
+        active: true,
+        status: 'Active',
+      },
+    },
+  ];
+
   login(credentials: CredentialsDto): Observable<FullUserDto> {
     if (
       credentials.username === 'admin' &&
@@ -268,5 +316,10 @@ export class BackendService {
         delay(1000)
       );
     }
+  }
+
+  fetchAnnouncements(companyId: number): AnnouncementDto[] {
+    console.log('Using test data for announcements');
+    return this.mockAnnouncements;
   }
 }

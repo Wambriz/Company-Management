@@ -1,1 +1,15 @@
-<p>home-announcements works!</p>
+<div class="home-announcements-container">
+    <h2>Announcements</h2>
+    <div *ngIf="announcements.length > 0" class="announcements">
+      <ul>
+        <li *ngFor="let announcement of announcements">
+          <strong>{{ announcement.author.profile.firstname }} {{ announcement.author.profile.lastname }}</strong>, {{ announcement.date | date:'medium' }}<br>
+          {{ announcement.message }}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="announcements.length === 0">
+      <p>No announcements available.</p>
+    </div>
+  </div>
+  
