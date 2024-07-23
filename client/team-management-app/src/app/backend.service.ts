@@ -43,8 +43,8 @@ export class BackendService {
   //   );
   // }
 
-  // fetchAnnouncements(companyId: number): AnnouncementDto[] {
-  //   const url = this.backendUrl + `company/${companyId}/announcements`;
+  // fetchAnnouncements(id: number): AnnouncementDto[] {
+  //   const url = this.backendUrl + `company/${id}/announcements`;
   //   let announcements: AnnouncementDto[] = [];
   //   this.http.get<AnnouncementDto[]>(url).subscribe(
   //     (data) => (announcements = data),
