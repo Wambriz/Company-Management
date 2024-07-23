@@ -45,7 +45,7 @@ const routes: Routes = [
     CreateTeamCardComponent,
     TeamCreationPopupComponent,
     NavbarComponent,
-    TeamProjectsComponent
+    TeamProjectsComponent,
     TeamCreationPopupComponent,
     AnnouncementFormComponent
   ],
