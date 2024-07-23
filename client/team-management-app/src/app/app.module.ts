@@ -19,6 +19,8 @@ import { CreateTeamCardComponent } from './teams/create-team-card/create-team-ca
 import { TeamCreationPopupComponent } from './teams/team-creation-popup/team-creation-popup.component';
 import { BackendService } from './backend.service';
 import { RouterModule, Routes } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { TeamProjectsComponent } from './team-projects/team-projects.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AnnouncementFormComponent } from './home-announcements/announcement-form/announcement-form.component';
 
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'select-company', component: SelectCompanyComponent },
   { path: 'home-announcements', component: HomeAnnouncementsComponent },
+  { path: 'teams', component: TeamsComponent },
+  { path: 'projects', component: TeamProjectsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
@@ -39,6 +43,9 @@ const routes: Routes = [
     SelectCompanyComponent,
     HomeAnnouncementsComponent,
     CreateTeamCardComponent,
+    TeamCreationPopupComponent,
+    NavbarComponent,
+    TeamProjectsComponent
     TeamCreationPopupComponent,
     AnnouncementFormComponent
   ],
