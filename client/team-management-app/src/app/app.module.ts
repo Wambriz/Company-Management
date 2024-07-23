@@ -24,6 +24,7 @@ import { TeamProjectsComponent } from './team-projects/team-projects.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AnnouncementFormComponent } from './home-announcements/announcement-form/announcement-form.component';
 import { ProjectCreationPopupComponent } from './team-projects/project-creation-popup/project-creation-popup.component';
+import { ProjectEditPopupComponent } from './team-projects/project-edit-popup/project-edit-popup.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,7 +50,8 @@ const routes: Routes = [
     TeamProjectsComponent,
     TeamCreationPopupComponent,
     AnnouncementFormComponent,
-    ProjectCreationPopupComponent
+    ProjectCreationPopupComponent,
+    ProjectEditPopupComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,8 @@ export class TeamProjectsComponent implements OnInit{
   teamProjects: ProjectDto[] = [];
   currentTeam: TeamDto;
   showCreateProjectPopup: boolean = false;
+  showEditProjectPopup: boolean = false;
+
   
   constructor(private backendService: BackendService){}
 
@@ -26,5 +28,14 @@ export class TeamProjectsComponent implements OnInit{
 
   closeProjectPopup() {
     this.showCreateProjectPopup = false;
+  }
+
+  openEditProjectPopup() {
+    this.showEditProjectPopup = true;
+  }
+
+  closeEditProjectPopup() {
+    this.showEditProjectPopup = false;
+
   }
 }
