@@ -16,6 +16,7 @@ import {
 })
 export class BackendService {
   private backendUrl = 'http://localhost:4200/';
+  currentTeam: TeamDto = {id: -1, name: "", description: "", users:[]} //This variable will dynamically change as different team projects are requested
 
   constructor(private http: HttpClient) {}
 
@@ -463,5 +464,11 @@ export class BackendService {
   fetchAnnouncements(companyId: number): AnnouncementDto[] {
     console.log('Using test data for announcements');
     return this.mockAnnouncements;
+  }
+  getCurrentTeam(): TeamDto{
+    return this.currentTeam
+  }
+  setCurrentTeam(teamDto: TeamDto) { //Assign current team with a new TeamDto
+    this.currentTeam = teamDto;
   }
 }

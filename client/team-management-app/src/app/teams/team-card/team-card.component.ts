@@ -27,4 +27,7 @@ getProjectCountByTeamDto(team: TeamDto): number {//This method takes a TeamDto, 
   return this.backendService.getTeamProjects(team).length
 }
 
+setCurrentTeam(team: TeamDto) {//When this is called, the currentTeam variable in our service is updated (for our projects elements that come right after)
+  this.backendService.setCurrentTeam(team)  //This is our method of passing the current team to our next page, our team-projects component
+}
 }

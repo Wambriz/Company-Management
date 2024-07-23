@@ -1,2 +1,5 @@
 <app-navbar></app-navbar>
-<p>team-projects works!</p>
+<h1>Projects for {{currentTeam.name}}</h1>
+<div class="project-containers" *ngFor="let project of teamProjects">
+    {{project.name}}
+</div>
