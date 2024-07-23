@@ -3,6 +3,8 @@ package com.teamblue.Management_App.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.Set;
 
 
@@ -15,21 +17,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private Profile profile;
-
-    @Embedded
-    private Credentials credentials;
-
+    private String username;
+    private String password;
+    private String first;
+    private String last;
+    private String email;
+    private String phone;
     private Boolean active;
     private Boolean admin;
     private String status;
 
     @OneToMany(mappedBy = "author")
-    private Set<Announcements> announcements;
+    private List<Announcements> announcements;
 
     @OneToMany(mappedBy = "user")
-    private Set<UserCompany> userCompanies;
+    private List<UserCompany> userCompanies;
 
     @ManyToMany
     @JoinTable(
@@ -37,6 +39,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
-    private Set<Team> teams;
+    private List<Team> teams;
 }
 

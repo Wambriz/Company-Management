@@ -7,9 +7,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface CredentialsMapper {
-    CredentialsMapper INSTANCE = Mappers.getMapper(CredentialsMapper.class);
 
-    CredentialsDto credentialsToCredentialsDto(Credentials credentials);
-    Credentials credentialsDtoToCredentials(CredentialsDto credentialsDto);
 
 }

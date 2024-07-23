@@ -2,12 +2,13 @@ package com.teamblue.Management_App.mappers;
 
 import java.util.List;
 
+import com.teamblue.Management_App.dtos.FullUserDto;
+import com.teamblue.Management_App.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {ProfileMapper.class, CredentialsMapper.class})
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
+    FullUserDto entityToDto(User user);
 }

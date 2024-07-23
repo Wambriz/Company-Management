@@ -11,18 +11,9 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnnouncementDto {
-	
-	@NonNull
-	private Long id;
-	
-	@NonNull
+    private Long id;
     private Timestamp date;
-	
-	@NonNull
     private String title;
-	
     private String message;
-    
-    @NonNull
     private BasicUserDto author;
 }

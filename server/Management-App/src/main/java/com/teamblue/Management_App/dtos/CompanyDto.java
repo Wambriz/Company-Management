@@ -6,21 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDto {
-	
-	@NonNull
 	private Long id;
-	
-	@NonNull
-    private String name;
-	
-	@NonNull
-    private String description;
-	
-	private TeamDto[] teams;
-	
-	private BasicUserDto[] users;
+	private String name;
+	private String description;
+	private List<TeamDto> teams;
+	private List<BasicUserDto> users;
 }

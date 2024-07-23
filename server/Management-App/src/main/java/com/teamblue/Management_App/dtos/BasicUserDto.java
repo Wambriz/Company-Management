@@ -9,17 +9,10 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 
-// this is a RESPONSE DTO
 public class BasicUserDto {
-	
-	@NonNull
 	private Long id;
-	
-	@NonNull
 	private ProfileDto profile;
-	
 	private Boolean isAdmin;
 	private Boolean active;
-    private String status;
-	
+	private String status;
 }

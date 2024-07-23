@@ -3,6 +3,8 @@ package com.teamblue.Management_App.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +20,9 @@ public class Company {
     private String description;
 
     @OneToMany(mappedBy = "company")
-    private Set<Announcements> announcements;
+    private List<Announcements> announcements;
 
     @OneToMany(mappedBy = "company")
-    private Set<Team> teams;
+    private List<Team> teams;
 }
 

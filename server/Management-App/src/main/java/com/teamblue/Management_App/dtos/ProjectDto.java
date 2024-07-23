@@ -9,17 +9,9 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
-	
-	@NonNull
     private Long id;
-
-	@NonNull
     private String name;
     private String description;
-    
-    @NonNull
     private Boolean active;
-    
-    @NonNull
     private TeamDto team;
 }
