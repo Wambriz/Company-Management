@@ -15,12 +15,14 @@ import { TeamCreationPopupComponent } from './teams/team-creation-popup/team-cre
 import { BackendService } from './backend.service';
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TeamProjectsComponent } from './team-projects/team-projects.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'select-company', component: SelectCompanyComponent },
   { path: 'home-announcements', component: HomeAnnouncementsComponent },
   { path: 'teams', component: TeamsComponent },
+  { path: 'projects', component: TeamProjectsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
@@ -35,7 +37,8 @@ const routes: Routes = [
     HomeAnnouncementsComponent,
     CreateTeamCardComponent,
     TeamCreationPopupComponent,
-    NavbarComponent
+    NavbarComponent,
+    TeamProjectsComponent
   ],
   imports: [
     BrowserModule,
