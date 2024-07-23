@@ -38,6 +38,10 @@ export class LoginComponent {
         if (user.isAdmin) {
           this.router.navigate(['/select-company']); //Navagate to the corrent page based on if the user is an admin or not. -Devin
         } else {
+          if (user.companies && user.companies.length > 0) {
+            const selectedCompany = user.companies[0]; //User should only have 1 company asigned, regqurdless I'm only pulling the 1st one, if there is one, to storage -Devin
+            localStorage.setItem('selectedCompany', JSON.stringify(selectedCompany));
+          }
           this.router.navigate(['/home-announcements']);
         }
       },

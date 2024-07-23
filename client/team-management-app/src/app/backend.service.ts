@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { delay, Observable, of, throwError } from 'rxjs';
-import { CredentialsDto, FullUserDto, AnnouncementDto,  CompanyDto, ProjectDto, TeamDto, TeamRequestDto  } from './models';
+import {
+  CredentialsDto,
+  FullUserDto,
+  AnnouncementDto,
+  CompanyDto,
+  ProjectDto,
+  TeamDto,
+  TeamRequestDto,
+} from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -214,79 +222,104 @@ export class BackendService {
   //New Company of Dummy Data
   company2: CompanyDto = {
     id: 16,
-    name: "Screaming Eagles",
-    description: "A Company about Mil-Tech",
+    name: 'Screaming Eagles',
+    description: 'A Company about Mil-Tech',
     teams: [this.team2],
-    users: [ //users is an array of Basic User DTOs, which is represnted as a JSON object of our basic user DTO
-      { //BasicUserDto 1
+    users: [
+      //users is an array of Basic User DTOs, which is represnted as a JSON object of our basic user DTO
+      {
+        //BasicUserDto 1
         id: 6,
-        profile: {firstname: "Richard", lastname: "Winters", email: "richard.winters@101st.com", phone: "1234569999"}, //ProfileDto of BasicUserDto 1
+        profile: {
+          firstname: 'Richard',
+          lastname: 'Winters',
+          email: 'richard.winters@101st.com',
+          phone: '1234569999',
+        }, //ProfileDto of BasicUserDto 1
         isAdmin: false,
         active: true,
-        status: "Active"
+        status: 'Active',
       },
-      { //BasicUserDto 2
+      {
+        //BasicUserDto 2
         id: 7,
-        profile: {firstname: "Herbert", lastname: "Sobel", email: "herber.sobel@101st.com", phone: "1234568888"}, //ProfileDto of BasicUserDto 1
+        profile: {
+          firstname: 'Herbert',
+          lastname: 'Sobel',
+          email: 'herber.sobel@101st.com',
+          phone: '1234568888',
+        }, //ProfileDto of BasicUserDto 1
         isAdmin: false,
         active: true,
-        status: "Active"
+        status: 'Active',
       },
-      { //BasicUserDto 3
+      {
+        //BasicUserDto 3
         id: 8,
-        profile: {firstname: "Robert", lastname: "Sink", email: "robert.sink@101st.com", phone: "1234567777"}, //ProfileDto of BasicUserDto 1
+        profile: {
+          firstname: 'Robert',
+          lastname: 'Sink',
+          email: 'robert.sink@101st.com',
+          phone: '1234567777',
+        }, //ProfileDto of BasicUserDto 1
         isAdmin: true,
         active: true,
-        status: "Active"
+        status: 'Active',
       },
-    ]
-  }
+    ],
+  };
 
-  company2TeamMembers: FullUserDto[] = [ //Create list of company members of dummy data to make members of project.
-    { //FullUserDto 1
+  company2TeamMembers: FullUserDto[] = [
+    //Create list of company members of dummy data to make members of project.
+    {
+      //FullUserDto 1
       id: 6,
-      profile: {firstname: "Richard", lastname: "Winters", email: "richard.winters@101st.com", phone: "1234569999"}, //ProfileDto of BasicUserDto 1
+      profile: {
+        firstname: 'Richard',
+        lastname: 'Winters',
+        email: 'richard.winters@101st.com',
+        phone: '1234569999',
+      }, //ProfileDto of BasicUserDto 1
       isAdmin: false,
       active: true,
-      status: "Active",
-      companies: [
-        this.company2
-      ],
-      teams: [
-        this.team2
-      ]
+      status: 'Active',
+      companies: [this.company2],
+      teams: [this.team2],
     },
-    { //FullUserDto 2
+    {
+      //FullUserDto 2
       id: 7,
-      profile: {firstname: "Herbert", lastname: "Sobel", email: "herber.sobel@101st.com", phone: "1234568888"}, //ProfileDto of BasicUserDto 1
+      profile: {
+        firstname: 'Herbert',
+        lastname: 'Sobel',
+        email: 'herber.sobel@101st.com',
+        phone: '1234568888',
+      }, //ProfileDto of BasicUserDto 1
       isAdmin: false,
       active: true,
-      status: "Active",
-      companies: [
-        this.company2
-      ],
-      teams: [
-        this.team2
-      ]
+      status: 'Active',
+      companies: [this.company2],
+      teams: [this.team2],
     },
-    { //FullUserDto 3
+    {
+      //FullUserDto 3
       id: 8,
-      profile: {firstname: "Robert", lastname: "Sink", email: "robert.sink@101st.com", phone: "1234567777"}, //ProfileDto of BasicUserDto 1
+      profile: {
+        firstname: 'Robert',
+        lastname: 'Sink',
+        email: 'robert.sink@101st.com',
+        phone: '1234567777',
+      }, //ProfileDto of BasicUserDto 1
       isAdmin: true,
       active: true,
-      status: "Active",
-      companies: [
-        this.company2
-      ],
-      teams: [
-        this.team2
-      ]
+      status: 'Active',
+      companies: [this.company2],
+      teams: [this.team2],
     },
-  ]
+  ];
 
-  listOfDummyTeams: TeamDto[] = [this.team1, this.team2]
+  listOfDummyTeams: TeamDto[] = [this.team1, this.team2];
 
-  
   //Add a new team to the list of teams
   addDummyTeam(newTeam: TeamDto): void {
     this.listOfDummyTeams.push(newTeam);
@@ -339,14 +372,22 @@ export class BackendService {
     isAdmin: false,
     active: true,
     status: 'active',
-    companies: [],
+    companies: [
+      {
+        id: 1,
+        name: "Carter's",
+        description: "We make kid's cloths",
+        teams: [],
+        users: [],
+      },
+    ],
     teams: [],
   };
 
   private mockAnnouncements: AnnouncementDto[] = [
     {
       id: 1,
-      date: new Date().getTime(),
+      date: 1721747368975,
       title: 'Announcement 1',
       message: 'This is the first announcement.',
       author: {
@@ -364,7 +405,7 @@ export class BackendService {
     },
     {
       id: 2,
-      date: new Date().getTime(),
+      date: 1721747389451,
       title: 'Announcement 2',
       message: 'This is the second announcement.',
       author: {
@@ -401,8 +442,9 @@ export class BackendService {
     }
   }
 
-  getActiveMembers(): FullUserDto[] { //Later, this method should accept a company ID when making request to backend for active members of a company
-    return this.company2TeamMembers
+  getActiveMembers(): FullUserDto[] {
+    //Later, this method should accept a company ID when making request to backend for active members of a company
+    return this.company2TeamMembers;
   }
 
   createTeam(newTeamRequestDto: TeamRequestDto): void {
@@ -414,9 +456,9 @@ export class BackendService {
       name: newTeamRequestDto.name,
       description: newTeamRequestDto.description,
       users: newTeamRequestDto.users,
-    }
+    };
 
-    this.addDummyTeam(newTeamDto) //Adding our TeamDto response from the database to our list of teams
+    this.addDummyTeam(newTeamDto); //Adding our TeamDto response from the database to our list of teams
   }
   fetchAnnouncements(companyId: number): AnnouncementDto[] {
     console.log('Using test data for announcements');
