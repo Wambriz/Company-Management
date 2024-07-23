@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProfileDto {
-    
-    private String firstName;
-    private String lastName;
-    private String phone;
-    
-    @NonNull
+    private String firstname;
+    private String lastname;
     private String email;
+    private String phone;
 }

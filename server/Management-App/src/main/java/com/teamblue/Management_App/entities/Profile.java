@@ -9,16 +9,10 @@ import lombok.NonNull;
 
 @Embeddable
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Profile {
-
-	private String firstName;
-	
-	private String lastName;
-	
-	@NonNull
+	private String firstname;
+	private String lastname;
 	private String email;
-	
 	private String phone;
 }

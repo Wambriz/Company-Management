@@ -17,10 +17,10 @@ public class User {
 
     @Embedded
     private Profile profile;
-    
+
     @Embedded
     private Credentials credentials;
-    
+
     private Boolean active;
     private Boolean admin;
     private String status;

@@ -4,10 +4,10 @@ import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable 
-@NoArgsConstructor
+@Embeddable
 @Data
+@NoArgsConstructor
 public class Credentials {
-    private String username;
+    private String email;
     private String password;
 }
