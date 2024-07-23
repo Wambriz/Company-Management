@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Create Announcement</h2>
+<mat-dialog-content>
+  <form [formGroup]="createAnnouncementForm" (ngSubmit)="submitAnnouncement()">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="message" required></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="submitAnnouncement()" [disabled]="!createAnnouncementForm.valid">Submit</button>
+</mat-dialog-actions>

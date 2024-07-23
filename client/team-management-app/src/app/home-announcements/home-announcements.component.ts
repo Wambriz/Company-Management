@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AnnouncementDto, CompanyDto } from '../models';
+import { MatDialog } from '@angular/material/dialog';
+import { AnnouncementDto, CompanyDto, FullUserDto } from '../models';
 import { BackendService } from '../backend.service';
+import { AnnouncementFormComponent } from './announcement-form/announcement-form.component';
 
 @Component({
   selector: 'app-home-announcements',
@@ -11,7 +13,8 @@ export class HomeAnnouncementsComponent implements OnInit {
   announcements: AnnouncementDto[] = [];
 
   constructor(
-    private backendService: BackendService
+    private backendService: BackendService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -24,4 +27,13 @@ export class HomeAnnouncementsComponent implements OnInit {
     }
   }
 
+  openCreateAnnouncementPopup(): void {
+    const dialogRef = this.dialog.open(AnnouncementFormComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.announcements.push(result);
+      }
+    });
+  }
 }

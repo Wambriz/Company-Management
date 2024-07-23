@@ -63,6 +63,12 @@ export interface AnnouncementDto {
   author: BasicUserDto;
 }
 
+export interface CreateAnnouncementDto {
+  title: string;
+  message: string;
+  author: BasicUserDto;
+}
+
 export interface ProjectDto {
   id: number;
   name: string;
