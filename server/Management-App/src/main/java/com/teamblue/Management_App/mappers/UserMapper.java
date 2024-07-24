@@ -14,6 +14,8 @@ public interface UserMapper {
 
 //	@Mapping(target="username", source="credentials.username")
     FullUserDto entityToDto(User entity);
+
+    List<FullUserDto> entitiesToDtos(List<User> entities);
 	
 	User RequestDtoToEntity(FullUserDto fullUserDto);
 }

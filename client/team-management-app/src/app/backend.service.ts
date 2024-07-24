@@ -70,7 +70,7 @@ export class BackendService {
   getUsers(): Observable<FullUserDto[]> {
     const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!);
     const id = selectedCompany.id;
-    const url = `${this.backendUrl}company/${id}/users`;
+    const url = this.backendUrl + `company/${id}/users`;
     return this.http.get<FullUserDto[]>(url);
   }
 
