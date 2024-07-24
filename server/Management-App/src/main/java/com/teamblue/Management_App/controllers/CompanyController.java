@@ -23,12 +23,12 @@ public class CompanyController {
     	return companyService.getAllCompanies();
     }
     
-    @GetMapping("/@{id}/announcements")
+    @GetMapping("/{id}/announcements")
     public List<AnnouncementDto> getAllCompanyAnnouncements(@PathVariable Long id){
     	return companyService.getAllCompanyAnnouncements(id);
     }
     
-    @PostMapping("/@{id}/announcement")
+    @PostMapping("/{id}/announcement")
     @ResponseStatus(HttpStatus.CREATED)
     public AnnouncementDto createAnnouncement(@PathVariable Long id, @RequestBody AnnouncementRequestDto announcementRequestDto) {
     	return companyService.createAnnouncement(id, announcementRequestDto);

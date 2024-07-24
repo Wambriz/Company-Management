@@ -41,10 +41,12 @@ public class DatabaseSeeder implements CommandLineRunner {
         Company company1 = new Company();
         company1.setName("Tech Corp");
         company1.setDescription("A leading technology company");
+        company1.setActive(true); //  setting the active field
 
         Company company2 = new Company();
         company2.setName("Innovate Inc");
         company2.setDescription("Innovating the future");
+        company2.setActive(true); // setting the active field
 
         companyRepository.saveAll(List.of(company1, company2));
     }
@@ -75,7 +77,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         creds2.setPassword("password123");
         user2.setCredentials(creds2);
         Profile p2 = new Profile();
-        p2.setFirstname(" Jane");
+        p2.setFirstname("Jane");
         p2.setLastname("Doe");
         p2.setEmail("jane.doe@example.com");
         p2.setPhone("098-765-4321");
@@ -87,7 +89,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         userRepository.saveAll(List.of(user1, user2));
     }
-
 
     private void seedTeams() {
         Team team1 = new Team();
@@ -116,18 +117,23 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void seedAnnouncements() {
+        Company company1 = companyRepository.findByName("Tech Corp");
+        User author1 = userRepository.findByCredentialsUsername("john.doe@example.com");
+        User author2 = userRepository.findByCredentialsUsername("jane.doe@example.com");
+
         Announcements announcement1 = new Announcements();
-//        announcement1.setDate(new Timestamp(System.currentTimeMillis()));
         announcement1.setTitle("Welcome");
         announcement1.setMessage("Welcome to the company!");
+        announcement1.setCompany(company1);
+        announcement1.setAuthor(author1);
 
         Announcements announcement2 = new Announcements();
-//        announcement2.setDate(new Timestamp(System.currentTimeMillis()));
         announcement2.setTitle("Meeting");
         announcement2.setMessage("All hands meeting tomorrow.");
+        announcement2.setCompany(company1);
+        announcement2.setAuthor(author2);
 
         announcementsRepository.saveAll(List.of(announcement1, announcement2));
     }
-
 }
 
