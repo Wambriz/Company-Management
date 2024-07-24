@@ -9,7 +9,8 @@ import {
   ProjectDto,
   TeamDto,
   TeamRequestDto,
-  CreateAnnouncementDto
+  CreateAnnouncementDto,
+  ProjectRequestDto
 } from './models';
 
 @Injectable({
@@ -462,7 +463,8 @@ export class BackendService {
   }
 
   createTeam(newTeamRequestDto: TeamRequestDto): void {
-    //Here we would communicate with out endpoint, receive a proper TeamDto in return, and THEN add it to our list of teams
+    //Here we would communicate with out endpoint, save our new team, and then
+    //Make another call to fetch a list of teams.
 
     //For now, pretend to do that by manually creating a new TeamDto
     const newTeamDto: TeamDto = {
@@ -473,6 +475,32 @@ export class BackendService {
     };
 
     this.addDummyTeam(newTeamDto); //Adding our TeamDto response from the database to our list of teams
+  }
+
+  createProject(newProjectRequestDto: ProjectRequestDto): void {
+    //Here we would communicate with our endpoint, save our new project, and then
+    //make another call to fetch the list of projects
+
+    //For now, pretend to do that by manually creating a new TeamDto
+    const newProjectDto: ProjectDto = {
+      id: 999,
+      name: newProjectRequestDto.name,
+      description: newProjectRequestDto.description,
+      active: newProjectRequestDto.active,
+      team: this.currentTeam
+    };
+
+    //Adding our new project to our current list of team projects 
+    this.getTeamProjects(this.currentTeam).push(newProjectDto);  //(Later our getTeamProjects method will simply fetch the list of projects in the DB)
+  }
+  updateProject(newProjectDto: ProjectDto): ProjectDto {
+    //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.
+
+    //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used. 
+
+    //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
+    this.getTeamProjects(this.currentTeam).push(newProjectDto);
+    return newProjectDto;
   }
   fetchAnnouncements(companyId: number): AnnouncementDto[] {
     console.log('Using test data for announcements');
