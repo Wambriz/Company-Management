@@ -15,6 +15,7 @@ import com.teamblue.Management_App.repositories.AnnouncementsRepository;
 import com.teamblue.Management_App.repositories.CompanyRepository;
 import com.teamblue.Management_App.repositories.UserRepository;
 import com.teamblue.Management_App.services.CompanyService;
+import com.teamblue.Management_App.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,14 @@ public class CompanyServiceImpl implements CompanyService {
                 })
                 .collect(Collectors.toList());
     }
+  
+    @Override
+    public List<FullUserDto> getUsersByCompanyId(long id) {
+        System.out.println("Made a call to CompanyServiceImpl");
+        return userMapper.entitiesToDtos(userRepository.findUsersByCompanyId(id));
+    }
+  
+  
 
     @Override
     public List<AnnouncementDto> getAllCompanyAnnouncements(Long id){
@@ -103,3 +112,4 @@ public class CompanyServiceImpl implements CompanyService {
         return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
     }
 }
+

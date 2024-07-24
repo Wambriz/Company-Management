@@ -1,0 +1,18 @@
+<div class="team-page">
+    <div class="team-container" *ngFor="let team of listOfTeams" (click)="setCurrentTeam(team)" routerLink="/projects"> <!--Iterating through the lists of teams we fetched from the backend-->
+        <div class="team-title">
+            <p>{{team.name}}</p>
+            <p># of Projects: {{getProjectCountByTeamDto(team)}}</p>
+        </div>
+        <div class="team-body">
+            <p>Members:</p>
+            <div class="team-member-container">
+                <div class="team-members" *ngFor="let member of team.users"> <!--Iterating through the list of users for the current team-->
+                    <div class="team-member-names">
+                        {{member.profile.firstname}} {{member.profile.lastname}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

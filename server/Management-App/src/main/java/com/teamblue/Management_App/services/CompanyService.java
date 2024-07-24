@@ -1,3 +1,4 @@
+
 package com.teamblue.Management_App.services;
 
 import com.teamblue.Management_App.dtos.AnnouncementDto;
@@ -15,4 +16,6 @@ public interface CompanyService {
 	List<AnnouncementDto> getAllCompanyAnnouncements(Long id);
 
 	List<CompanyDto> getAllCompanies();
+  List<FullUserDto> getUsersByCompanyId(long id);
 }
+

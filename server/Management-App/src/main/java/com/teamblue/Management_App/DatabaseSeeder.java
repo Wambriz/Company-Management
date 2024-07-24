@@ -41,12 +41,16 @@ public class DatabaseSeeder implements CommandLineRunner {
         Company company1 = new Company();
         company1.setName("Tech Corp");
         company1.setDescription("A leading technology company");
+
         company1.setActive(true); //  setting the active field
+
 
         Company company2 = new Company();
         company2.setName("Innovate Inc");
         company2.setDescription("Innovating the future");
+
         company2.setActive(true); // setting the active field
+
 
         companyRepository.saveAll(List.of(company1, company2));
     }
@@ -89,6 +93,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         userRepository.saveAll(List.of(user1, user2));
     }
+
 
     private void seedTeams() {
         Team team1 = new Team();
@@ -135,5 +140,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         announcementsRepository.saveAll(List.of(announcement1, announcement2));
     }
+
 }
 

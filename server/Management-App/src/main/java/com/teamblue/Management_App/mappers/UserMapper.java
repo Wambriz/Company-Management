@@ -16,6 +16,7 @@ public interface UserMapper {
 
     FullUserDto entityToDto(User entity);
 
+
 	User requestDtoToEntity(UserRequestDto userRequestDto);
 
 	List<BasicUserDto> entitiesToDtos(List<User> all);
@@ -26,5 +27,10 @@ public interface UserMapper {
     BasicUserDto entityToBasicDto(User user);
     
     User basicUserDtoToEntity(BasicUserDto basicUserDto);
+
+
+    List<FullUserDto> entitiesToDtos(List<User> entities);
+	
+	User RequestDtoToEntity(FullUserDto fullUserDto);
 
 }

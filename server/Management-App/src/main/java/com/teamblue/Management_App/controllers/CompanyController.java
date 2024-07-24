@@ -1,5 +1,6 @@
 package com.teamblue.Management_App.controllers;
 
+
 import java.util.List;
 
 import com.teamblue.Management_App.dtos.AnnouncementDto;
@@ -9,6 +10,8 @@ import com.teamblue.Management_App.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.teamblue.Management_App.dtos.FullUserDto;
+import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+
 
     // TODO: ENDPOINTS
     @GetMapping
@@ -32,5 +36,12 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.CREATED)
     public AnnouncementDto createAnnouncement(@PathVariable Long id, @RequestBody AnnouncementRequestDto announcementRequestDto) {
     	return companyService.createAnnouncement(id, announcementRequestDto);
+    }
+
+
+    @GetMapping("/{id}/users")
+    public List<FullUserDto> getUsersByCompanyId(@PathVariable long id) {
+        System.out.println("Made a call to CompanyController");
+        return companyService.getUsersByCompanyId(id);
     }
 }
