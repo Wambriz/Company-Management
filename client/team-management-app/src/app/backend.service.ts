@@ -339,9 +339,24 @@ export class BackendService {
   addDummyTeam(newTeam: TeamDto): void {
     this.listOfDummyTeams.push(newTeam);
   }
+  
+  getListOfTeams(): TeamDto[] {
 
-  getListOfDummyTeams(): TeamDto[] {
-    return this.listOfDummyTeams;
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); //Get Current CompanyDto
+    const companyId = selectedCompany.id;//Get current company ID
+
+    //Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams`; //Endpoint URL
+    const backendResponse =  this.http.get<[TeamDto]>(url); //Send get request to the endpoint. This will return an observable<[TeamDto]>
+    let listOfTeams: TeamDto[] = []; //List of teams we will return
+    backendResponse.subscribe({
+      next: (teams: [TeamDto]) => { //Get the [TeamDto] from our backend response
+        listOfTeams = teams; //Store [TeamDto]
+        console.log("Teams fetched from backend:" + listOfTeams);
+      }
+    });
+
+    return listOfTeams;
   }
   // Devin test block
   //
