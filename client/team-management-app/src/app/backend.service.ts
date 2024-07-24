@@ -340,23 +340,21 @@ export class BackendService {
     this.listOfDummyTeams.push(newTeam);
   }
   
-  getListOfTeams(): TeamDto[] {
-
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); //Get Current CompanyDto
-    const companyId = selectedCompany.id;//Get current company ID
-
-    //Create and use URL
-    const url = this.backendUrl + `company/${companyId}/teams`; //Endpoint URL
-    const backendResponse =  this.http.get<[TeamDto]>(url); //Send get request to the endpoint. This will return an observable<[TeamDto]>
-    let listOfTeams: TeamDto[] = []; //List of teams we will return
-    backendResponse.subscribe({
-      next: (teams: [TeamDto]) => { //Get the [TeamDto] from our backend response
-        listOfTeams = teams; //Store [TeamDto]
-        console.log("Teams fetched from backend:" + listOfTeams);
-      }
-    });
-
-    return listOfTeams;
+  async getListOfTeams(): Promise<TeamDto[]> { //As we are using promises, we must await them to get the actual value.
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams`; // Endpoint URL
+  
+    try { //Try/catch block since we are now awaiting on promises.
+      const teams: TeamDto[] = await this.http.get<TeamDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [TeamDto]
+      console.log("Teams fetched from backend:" + JSON.stringify(teams));
+      return teams; //Return the fetched [TeamDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
+      return [];
+    }
   }
   // Devin test block
   //
