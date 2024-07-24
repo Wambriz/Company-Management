@@ -493,6 +493,15 @@ export class BackendService {
     //Adding our new project to our current list of team projects 
     this.getTeamProjects(this.currentTeam).push(newProjectDto);  //(Later our getTeamProjects method will simply fetch the list of projects in the DB)
   }
+  updateProject(newProjectDto: ProjectDto): ProjectDto {
+    //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.
+
+    //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used. 
+
+    //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
+    this.getTeamProjects(this.currentTeam).push(newProjectDto);
+    return newProjectDto;
+  }
   fetchAnnouncements(companyId: number): AnnouncementDto[] {
     console.log('Using test data for announcements');
     return this.mockAnnouncements;

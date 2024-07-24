@@ -12,6 +12,7 @@ export class TeamProjectsComponent implements OnInit{
   currentTeam: TeamDto;
   showCreateProjectPopup: boolean = false;
   showEditProjectPopup: boolean = false;
+  projectData: ProjectDto; //We will pass this variable down to the edit project child popup
 
   
   constructor(private backendService: BackendService){}
@@ -27,15 +28,22 @@ export class TeamProjectsComponent implements OnInit{
   }
 
   closeProjectPopup() {
+    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
     this.showCreateProjectPopup = false;
   }
 
-  openEditProjectPopup() {
+  openEditProjectPopup(project: ProjectDto) {
+    this.projectData = project; //Saving the project being edited for our popup to fetch/manipulate
     this.showEditProjectPopup = true;
   }
 
   closeEditProjectPopup() {
+    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
     this.showEditProjectPopup = false;
 
+  }
+
+  updateTeamProjectsFromDatabase() {
+    this.teamProjects = this.backendService.getTeamProjects(this.currentTeam); //Fetch newest version of projects in the database
   }
 }
