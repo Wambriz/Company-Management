@@ -117,12 +117,12 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void seedAnnouncements() {
         Announcements announcement1 = new Announcements();
-        announcement1.setDate(new Timestamp(System.currentTimeMillis()));
+//        announcement1.setDate(new Timestamp(System.currentTimeMillis()));
         announcement1.setTitle("Welcome");
         announcement1.setMessage("Welcome to the company!");
 
         Announcements announcement2 = new Announcements();
-        announcement2.setDate(new Timestamp(System.currentTimeMillis()));
+//        announcement2.setDate(new Timestamp(System.currentTimeMillis()));
         announcement2.setTitle("Meeting");
         announcement2.setMessage("All hands meeting tomorrow.");
 

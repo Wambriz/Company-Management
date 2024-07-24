@@ -1,15 +1,24 @@
 package com.teamblue.Management_App.services.impl;
 
+import com.teamblue.Management_App.dtos.AnnouncementDto;
+import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
+import com.teamblue.Management_App.dtos.CompanyDto;
 import com.teamblue.Management_App.dtos.FullUserDto;
+import com.teamblue.Management_App.entities.Announcements;
 import com.teamblue.Management_App.entities.Company;
 import com.teamblue.Management_App.entities.User;
+import com.teamblue.Management_App.exception.BadRequestException;
+import com.teamblue.Management_App.mappers.AnnouncementMapper;
+import com.teamblue.Management_App.mappers.CompanyMapper;
 import com.teamblue.Management_App.mappers.UserMapper;
+import com.teamblue.Management_App.repositories.AnnouncementsRepository;
 import com.teamblue.Management_App.repositories.CompanyRepository;
 import com.teamblue.Management_App.services.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +26,10 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final CompanyMapper companyMapper;
     private final UserMapper userMapper;
+    private final AnnouncementMapper announcementMapper;
+    private final AnnouncementsRepository announcementRepository;
 
     @Override
     public List<FullUserDto> getActiveUsersByCompanyId(Long companyId) {
@@ -42,5 +54,44 @@ public class CompanyServiceImpl implements CompanyService {
                 })
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<AnnouncementDto> getAllCompanyAnnouncements(Long id){
+    	Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        if (!company.getActive()) {
+        	throw new BadRequestException("Company is not active");
+        }
+        List<Announcements> announcements = company.getAnnouncements();
+        return announcementMapper.entitiesToDtos(announcements);
+        
+    }
+    
+    @Override
+    public List<CompanyDto> getAllCompanies(){
+    	return companyMapper.dtosToEntities(companyRepository.findAll());
+    }
+    
+    
+    @Override
+    public AnnouncementDto createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
+    	// Find company by id
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        if (!company.getActive()) {
+        	throw new BadRequestException("Company is not active");
+        }
+    	// Create new announcement object
+    	Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
+    	announce.setCompany(company);
+    	announce.setIsDeleted(false);
+    	System.out.println("Announcement: " + announce);
+    	// Update and Save Company
+    	List<Announcements> companyAnnouncements = company.getAnnouncements();
+    	companyAnnouncements.add(announce);
+    	company.setAnnouncements(companyAnnouncements);
+    	companyRepository.saveAndFlush(company);
+    	
+    	return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
+    }
 }
-

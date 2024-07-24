@@ -20,6 +20,8 @@ public class Company {
 
     private String name;
     private String description;
+    
+    private Boolean active;
 
     @OneToMany(mappedBy = "company")
     @ToString.Exclude
