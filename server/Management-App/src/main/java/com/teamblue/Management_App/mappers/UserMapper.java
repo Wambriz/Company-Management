@@ -11,13 +11,20 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = {ProfileMapper.class, CredentialsMapper.class, CompanyMapper.class})
-
 public interface UserMapper {
 
-//	@Mapping(target="username", source="credentials.username")
+
     FullUserDto entityToDto(User entity);
-	
+
 	User requestDtoToEntity(UserRequestDto userRequestDto);
 
 	List<BasicUserDto> entitiesToDtos(List<User> all);
+
+    FullUserDto entityToFullUserDto(User user);
+	User fullUSerDtoToEntity(FullUserDto fullUserDto);
+
+    BasicUserDto entityToBasicDto(User user);
+    
+    User basicUserDtoToEntity(BasicUserDto basicUserDto);
+
 }

@@ -29,7 +29,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<User> users = company.getTeams().stream()
                 .flatMap(team -> team.getUsers().stream())
                 .filter(User::getActive) // Filter out inactive users
-                .collect(Collectors.toList());
+                .toList();
 
         // Convert the list of User entities to a list of FullUserDto objects
         return users.stream()
