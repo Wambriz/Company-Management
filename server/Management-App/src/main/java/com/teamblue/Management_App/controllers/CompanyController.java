@@ -1,23 +1,18 @@
 package com.teamblue.Management_App.controllers;
 
-import com.teamblue.Management_App.dtos.FullUserDto;
-import com.teamblue.Management_App.services.CompanyService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-@RequestMapping("/company")
-@RequiredArgsConstructor
+@RequestMapping("")
 public class CompanyController {
 
-    private final CompanyService companyService;
+//    @Autowired
+//    private CompanyService companyService;
 
-    @GetMapping("/{id}/users")
-    public List<FullUserDto> getUsersByCompany(@PathVariable Long id) {
-        return companyService.getActiveUsersByCompanyId(id);
-    }
 }
-
