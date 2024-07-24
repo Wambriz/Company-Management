@@ -17,7 +17,7 @@ import {
   providedIn: 'root',
 })
 export class BackendService {
-  private backendUrl = 'http://localhost:4200/';
+  private backendUrl = 'http://localhost:8080/';
   currentTeam: TeamDto = {id: -1, name: "", description: "", users:[]} //This variable will dynamically change as different team projects are requested
 
   constructor(private http: HttpClient) {}
@@ -46,12 +46,12 @@ export class BackendService {
 
   // WARNING!!!! DO NOT DELETE! REAL LOGIN AND FETCH ANNOUNCEMENTS METHODS TO BE USED ONCE BACKEND IS EMPLAMENTED////////////////////////////////
 
-  // login(credentials: CredentialsDto): Observable<FullUserDto> {
-  //   return this.http.post<FullUserDto>(
-  //     this.backendUrl + 'users/login',
-  //     credentials
-  //   );
-  // }
+  login(credentials: CredentialsDto): Observable<FullUserDto> {
+    return this.http.post<FullUserDto>(
+      this.backendUrl + 'users/login',
+      credentials
+    );
+  }
 
   // fetchAnnouncements(id: number): AnnouncementDto[] {
   //   const url = this.backendUrl + `company/${id}/announcements`;
@@ -70,7 +70,7 @@ export class BackendService {
   getUsers(): Observable<FullUserDto[]> {
     const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!);
     const id = selectedCompany.id;
-    const url = `${this.backendUrl}company/${id}/users`;
+    const url = this.backendUrl + `company/${id}/users`;
     return this.http.get<FullUserDto[]>(url);
   }
 
@@ -438,24 +438,24 @@ export class BackendService {
     },
   ];
 
-  login(credentials: CredentialsDto): Observable<FullUserDto> {
-    if (
-      credentials.username === 'admin' &&
-      credentials.password === 'password'
-    ) {
-      return of(this.mockAdmin).pipe(delay(1000)); // Simulate network delay
-    }
-    if (
-      credentials.username === 'user' &&
-      credentials.password === 'password'
-    ) {
-      return of(this.mockUser).pipe(delay(1000)); // Simulate network delay
-    } else {
-      return throwError(() => new Error('Invalid username or password')).pipe(
-        delay(1000)
-      );
-    }
-  }
+  // login(credentials: CredentialsDto): Observable<FullUserDto> {
+  //   if (
+  //     credentials.username === 'admin' &&
+  //     credentials.password === 'password'
+  //   ) {
+  //     return of(this.mockAdmin).pipe(delay(1000)); // Simulate network delay
+  //   }
+  //   if (
+  //     credentials.username === 'user' &&
+  //     credentials.password === 'password'
+  //   ) {
+  //     return of(this.mockUser).pipe(delay(1000)); // Simulate network delay
+  //   } else {
+  //     return throwError(() => new Error('Invalid username or password')).pipe(
+  //       delay(1000)
+  //     );
+  //   }
+  // }
 
   getActiveMembers(): FullUserDto[] {
     //Later, this method should accept a company ID when making request to backend for active members of a company
