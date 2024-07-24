@@ -62,6 +62,11 @@
 			<version>${mapstruct.version}</version> <!-- MapStruct annotation processor -->
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.cooksys</groupId>
+			<artifactId>socialmedia</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

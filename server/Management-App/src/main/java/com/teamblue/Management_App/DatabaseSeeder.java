@@ -75,7 +75,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         creds2.setPassword("password123");
         user2.setCredentials(creds2);
         Profile p2 = new Profile();
-        p2.setFirstname("Jane");
+        p2.setFirstname(" Jane");
         p2.setLastname("Doe");
         p2.setEmail("jane.doe@example.com");
         p2.setPhone("098-765-4321");
