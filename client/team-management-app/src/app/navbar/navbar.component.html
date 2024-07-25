@@ -15,7 +15,7 @@
     <a *ngIf="isAdmin" routerLink="/users-reg">
         <h1 class="link">Users</h1>
     </a>
-    <a routerLink="/login">
+    <a routerLink="/login" (click) = "logout()">
         <h1 class="link">Logout</h1>
     </a>
 </nav>

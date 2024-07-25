@@ -83,6 +83,10 @@ export class BackendService {
   
   async getListOfTeams(): Promise<TeamDto[]> { //As we are using promises, we must await them to get the actual value.
     const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    if (!selectedCompany) { //If selected company is null (nothing in local storage), return nothing
+      console.error("No company found")
+      return [];
+    }
     const companyId = selectedCompany.id; // Get current company ID
   
     // Create and use URL
