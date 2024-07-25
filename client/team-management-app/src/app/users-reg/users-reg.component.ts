@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { CompanyDto, FullUserDto } from '../models';
+import { RouteguardsService } from '../../routeguards.service';
 
 @Component({
   selector: 'app-users-reg',
@@ -11,9 +12,10 @@ export class UsersRegComponent implements OnInit {
   users: FullUserDto[] = [];
   showForm: boolean = false;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private routeguardsService: RouteguardsService) {}
 
   ngOnInit(): void {
+    this.routeguardsService.blockUserNavigation(); //Block direct navigation to this page upon arriving
     this.loadUsers();
   }
 

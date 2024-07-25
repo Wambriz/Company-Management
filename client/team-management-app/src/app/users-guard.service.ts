@@ -5,13 +5,13 @@ import { RouteguardsService } from '../routeguards.service';
 @Injectable({
   providedIn: 'root'
 })
-//This Guard service is SPECIFICALLY built for /projects. Other routes need their own guards.
-export class ProjectsGuardService implements CanActivate {
+//This Guard service is SPECIFICALLY built for /users. Other routes need their own guards.
+export class UsersGuardService implements CanActivate {
   constructor(private routeGuardService: RouteguardsService, private router: Router) {}
 
   canActivate(): boolean {
-    if (!this.routeGuardService.isProjectsNavigationAllowed()) { //If routing to projects is not currently allowed
-        this.router.navigate(['/teams']); //Redirect to /teams
+    if (!this.routeGuardService.isUserNavigationAllowed()) { //If routing to users is not currently allowed
+        this.router.navigate(['/home-announcements']); //Redirect to /home
       return false;
     }
     return true;

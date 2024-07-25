@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompanyDto, FullUserDto } from '../models';
+import { RouteguardsService } from '../../routeguards.service';
 
 @Component({
   selector: 'app-select-company',
@@ -11,9 +12,10 @@ export class SelectCompanyComponent implements OnInit{
   selectedCompany: CompanyDto | null = null;
   companies: CompanyDto[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private routeguardsService: RouteguardsService) {}
 
   ngOnInit(): void {
+    this.routeguardsService.blockCompanyNavigation(); //Block direct navigation to this page upon arriving
     const userString = localStorage.getItem('user');
     if (userString) {
       const user: FullUserDto = JSON.parse(userString);
