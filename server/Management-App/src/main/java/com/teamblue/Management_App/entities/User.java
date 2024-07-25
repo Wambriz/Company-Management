@@ -42,13 +42,12 @@ public class User {
     private List<Company> companies;
 
     @ManyToMany
+    @ToString.Exclude
     @JoinTable(
             name = "user_team_table",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")
     )
-
-    @ToString.Exclude
     private List<Team> teams;
 }
 

@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 <h2 style="text-align: center;">Teams</h2>
 <div class="teams-container">
-    <app-team-card></app-team-card>
-    <app-create-team-card></app-create-team-card>
+    <ng-container *ngIf="showTeamCards">
+        <app-team-card></app-team-card>
+    </ng-container>
+    <app-create-team-card (close)="resetTeamCards()"></app-create-team-card>
 </div>
