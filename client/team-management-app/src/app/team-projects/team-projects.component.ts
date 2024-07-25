@@ -17,12 +17,11 @@ export class TeamProjectsComponent implements OnInit{
   
   constructor(private backendService: BackendService){}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.currentTeam = this.backendService.getCurrentTeam(); //Fetch the current team we are observing from our service
-    this.teamProjects = this.backendService.getTeamProjects(this.currentTeam); //Fetch [ProjectDto] with current TeamDto to display from our service(and therefore our backend)
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch [ProjectDto] with current TeamDto to display from our service(and therefore our backend)
   }
 
-  //TODO: Create 2 methods for changing the levers that make either of the relevant popups appear, similar to Create a new team
   openProjectPopup() {
     this.showCreateProjectPopup = true;
   }
@@ -43,8 +42,8 @@ export class TeamProjectsComponent implements OnInit{
 
   }
 
-  updateTeamProjectsFromDatabase() {
-    this.teamProjects = this.backendService.getTeamProjects(this.currentTeam); //Fetch newest version of projects in the database
+  async updateTeamProjectsFromDatabase() {
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch newest version of projects in the database
   }
 
   projectStatus(status: boolean): string {
