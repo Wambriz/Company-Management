@@ -1,19 +1,13 @@
 package com.teamblue.Management_App.services.impl;
 
-import com.teamblue.Management_App.dtos.AnnouncementDto;
-import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
-import com.teamblue.Management_App.dtos.CompanyDto;
-import com.teamblue.Management_App.dtos.FullUserDto;
-import com.teamblue.Management_App.entities.Announcements;
-import com.teamblue.Management_App.entities.Company;
-import com.teamblue.Management_App.entities.User;
+import com.teamblue.Management_App.dtos.*;
+import com.teamblue.Management_App.entities.*;
 import com.teamblue.Management_App.exception.BadRequestException;
 import com.teamblue.Management_App.mappers.AnnouncementMapper;
 import com.teamblue.Management_App.mappers.CompanyMapper;
+import com.teamblue.Management_App.mappers.ProjectMapper;
 import com.teamblue.Management_App.mappers.UserMapper;
-import com.teamblue.Management_App.repositories.AnnouncementsRepository;
-import com.teamblue.Management_App.repositories.CompanyRepository;
-import com.teamblue.Management_App.repositories.UserRepository;
+import com.teamblue.Management_App.repositories.*;
 import com.teamblue.Management_App.services.CompanyService;
 import com.teamblue.Management_App.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +27,9 @@ public class CompanyServiceImpl implements CompanyService {
     private final AnnouncementMapper announcementMapper;
     private final AnnouncementsRepository announcementRepository;
     private final UserRepository userRepository;
+    private final TeamRepository teamRepository;
+    private final ProjectRepository projectRepository;
+    private final ProjectMapper projectMapper;
 
     @Override
     public List<FullUserDto> getActiveUsersByCompanyId(Long companyId) {
@@ -63,8 +60,6 @@ public class CompanyServiceImpl implements CompanyService {
         System.out.println("Made a call to CompanyServiceImpl");
         return userMapper.entitiesToFullUserDtos(userRepository.findUsersByCompanyId(id));
     }
-  
-  
 
     @Override
     public List<AnnouncementDto> getAllCompanyAnnouncements(Long id){
@@ -110,6 +105,38 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.saveAndFlush(company);
 
         return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
+    }
+
+    @Override
+    public ProjectDto updateProject(Long companyId, Long teamId, ProjectDto projectDto) {
+        // find company by ID
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        // find team by ID
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new IllegalArgumentException("Team not found"));
+
+        // Ensure the team belongs to the company
+        if (!company.getTeams().contains(team)) {
+            throw new IllegalArgumentException("Team does not belong to the company");
+        }
+
+        // find project by id
+        Project project = projectRepository.findById(projectDto.getId()).orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        // Ensure the project belongs to the team
+        if (!team.getProjects().contains(project)) {
+            throw new IllegalArgumentException("Project does not belong to the team");
+        }
+
+        // Update the project entity with the new details
+        project.setName(projectDto.getName());
+        project.setDescription(projectDto.getDescription());
+        project.setActive(projectDto.getActive());
+
+        // Save the updated project
+        Project updatedProject = projectRepository.saveAndFlush(project);
+
+        // Convert the updated project entity to ProjectDto
+        return projectMapper.entityToDto(updatedProject);
     }
 }
 
