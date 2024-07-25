@@ -7,16 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.teamblue.Management_App.dtos.*;
 import org.springframework.stereotype.Service;
 
-import com.teamblue.Management_App.dtos.AnnouncementDto;
-import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
-import com.teamblue.Management_App.dtos.CompanyDto;
-import com.teamblue.Management_App.dtos.FullUserDto;
-import com.teamblue.Management_App.dtos.ProjectDto;
-import com.teamblue.Management_App.dtos.TeamDto;
-import com.teamblue.Management_App.dtos.TeamRequestDto;
-import com.teamblue.Management_App.dtos.UserRequestDto;
 import com.teamblue.Management_App.entities.Announcements;
 import com.teamblue.Management_App.entities.Company;
 import com.teamblue.Management_App.entities.Project;
@@ -222,5 +215,25 @@ public class CompanyServiceImpl implements CompanyService {
 
 
         return teamMapper.entityToDto(savedTeam);//Return the TeamDto we just pushed up (it will now include the ID)
+    }
+
+    @Override
+    public ProjectDto createProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto) {
+        // find company by ID
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        // Find team by ID
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new IllegalArgumentException("Team not found"));
+
+        // make sure team belongs to the company
+        if (!company.getTeams().contains(team)) { throw new IllegalArgumentException("Team does not belong to the company"); }
+
+        // map requestDto to Project entity
+        Project project = projectMapper.requestDtoToEntity(projectRequestDto);
+        project.setTeam(team);
+
+        // save project
+        Project savedProject = projectRepository.saveAndFlush(project);
+        // convert new project entity to ProjectDto for frontend
+        return projectMapper.entityToDto(savedProject);
     }
 }

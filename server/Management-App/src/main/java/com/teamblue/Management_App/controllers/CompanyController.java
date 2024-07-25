@@ -86,4 +86,10 @@ public class CompanyController {
         return companyService.createTeam(id, newTeam);
 
     }
+
+    @PostMapping("/{companyId}/teams/{teamId}/project")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProjectDto createProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectRequestDto projectRequestDto) {
+        return companyService.createProject(companyId, teamId, projectRequestDto);
+    }
 }
