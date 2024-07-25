@@ -527,15 +527,20 @@ export class BackendService {
       console.error('Error posting team:', error);
     }
   }
-  updateProject(newProjectDto: ProjectDto): ProjectDto {
-    //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.
+  async updateProject(newProjectDto: ProjectDto): Promise<void> {
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+    const teamId = newProjectDto.team.id; //Get project team's ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
 
-    //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used. 
-
-    //TODO: Implement updating a project via our backend
-    //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
-    // this.getTeamProjects(this.currentTeam).push(newProjectDto);
-    return newProjectDto;
+    try { //Try/catch block since we are now awaiting on promises.
+      //Send PATCH request to id/team endpoint, attaching newProjectDto as RequestBody.
+      await this.http.patch<ProjectDto>(url, newProjectDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
+    } catch (error) {
+      console.error('Error posting team:', error);
+    }
   }
   getCurrentTeam(): TeamDto{
     return this.currentTeam
