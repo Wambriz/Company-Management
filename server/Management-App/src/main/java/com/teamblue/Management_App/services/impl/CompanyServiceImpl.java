@@ -1,6 +1,9 @@
 package com.teamblue.Management_App.services.impl;
 
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,28 +108,34 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
-    public AnnouncementDto createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
-        // Find company by id
-        Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
-        // Create new announcement object
-        Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
-        announce.setCompany(company);
-        announce.setIsDeleted(false);
+    public void createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
+        Company company = companyRepository.getReferenceById(id);
+        Announcements announcements = announcementMapper.dtoToEntity(announcementRequestDto);
+        announcements.setCompany(company);
+        announcements.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        announcementRepository.saveAndFlush(announcements);
 
-        // Set the author from the user repository
-        User author = userRepository.findById(announcementRequestDto.getAuthor().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
-        announce.setAuthor(author);
-
-        System.out.println("Announcement: " + announce);
-        // Update and Save Company
-        List<Announcements> companyAnnouncements = company.getAnnouncements();
-        companyAnnouncements.add(announce);
-        company.setAnnouncements(companyAnnouncements);
-        companyRepository.saveAndFlush(company);
-
-        return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
+//        // Find company by id
+//        Company company = companyRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+//        // Create new announcement object
+//        Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
+//        announce.setCompany(company);
+//        announce.setIsDeleted(false);
+//
+//        // Set the author from the user repository
+//        User author = userRepository.findById(announcementRequestDto.getAuthor().getId())
+//                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
+//        announce.setAuthor(author);
+//
+//        System.out.println("Announcement: " + announce);
+//        // Update and Save Company
+//        List<Announcements> companyAnnouncements = company.getAnnouncements();
+//        companyAnnouncements.add(announce);
+//        company.setAnnouncements(companyAnnouncements);
+//        companyRepository.saveAndFlush(company);
+//
+//        return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
     }
     
     public List<ProjectDto> getCompanyTeamProjects(long comp_id, long team_id){

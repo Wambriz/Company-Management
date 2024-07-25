@@ -14,7 +14,8 @@ public interface AnnouncementMapper {
     AnnouncementDto entityToDto(Announcements announcements);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "date", ignore = true)
-    @Mapping(source = "author", target = "author")
+    @Mapping(target = "isDeleted", constant = "false")
+    @Mapping(target = "company", ignore = true)
     Announcements dtoToEntity(AnnouncementRequestDto announcementRequestDto);
     List<AnnouncementDto> entitiesToDtos(List<Announcements> announcements);
 }
