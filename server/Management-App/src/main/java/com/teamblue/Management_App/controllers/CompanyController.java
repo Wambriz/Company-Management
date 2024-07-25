@@ -39,6 +39,7 @@ public class CompanyController {
     
     @GetMapping("/{id}/announcements")
     public List<AnnouncementDto> getAllCompanyAnnouncements(@PathVariable Long id){
+        System.out.println("was called in controller");
     	return companyService.getAllCompanyAnnouncements(id);
     }
     

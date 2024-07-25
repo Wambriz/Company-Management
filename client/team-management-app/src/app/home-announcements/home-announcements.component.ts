@@ -11,6 +11,8 @@ import { AnnouncementFormComponent } from './announcement-form/announcement-form
 export class HomeAnnouncementsComponent implements OnInit {
   announcements: AnnouncementDto[] = [];
   showForm: boolean = false;
+  user: FullUserDto | null = null;
+  isAdmin: boolean = false;
 
   constructor(
     private backendService: BackendService
@@ -20,9 +22,18 @@ export class HomeAnnouncementsComponent implements OnInit {
     const selectedCompanyString = localStorage.getItem('selectedCompany');
     if (selectedCompanyString) {
       const selectedCompany: CompanyDto = JSON.parse(selectedCompanyString);
-      this.announcements = this.backendService.fetchAnnouncements(selectedCompany.id);
+      console.log("fetching announcements from component.ts")
+      this.backendService.fetchAnnouncements(selectedCompany.id).subscribe((announcements) => {
+        this.announcements = announcements;
+      });
     } else {
       console.error('No company selected.');
+    }
+
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData) as FullUserDto;
+      this.isAdmin = this.user.isAdmin;
     }
   }
 

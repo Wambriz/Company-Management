@@ -20,8 +20,6 @@ public class Company {
 
     private String name;
     private String description;
-    
-    private Boolean active;
 
     @OneToMany(mappedBy = "company")
     @ToString.Exclude
@@ -32,6 +30,6 @@ public class Company {
     private List<Team> teams;
 
     @ManyToMany(mappedBy = "companies") //We use this field to allow mapping between hashtags and tweets in a many to many relationship
-    private List<User> tweets = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 }
 

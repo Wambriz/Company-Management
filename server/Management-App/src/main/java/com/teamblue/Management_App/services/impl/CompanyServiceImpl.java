@@ -19,7 +19,6 @@ import com.teamblue.Management_App.entities.Company;
 import com.teamblue.Management_App.entities.Project;
 import com.teamblue.Management_App.entities.Team;
 import com.teamblue.Management_App.entities.User;
-import com.teamblue.Management_App.exception.BadRequestException;
 import com.teamblue.Management_App.mappers.AnnouncementMapper;
 import com.teamblue.Management_App.mappers.CompanyMapper;
 import com.teamblue.Management_App.mappers.ProjectMapper;
@@ -87,15 +86,14 @@ public class CompanyServiceImpl implements CompanyService {
     	return companyMapper.entityToDto(company) ;
     }
 
-
+//TODO - fix method
     @Override
     public List<AnnouncementDto> getAllCompanyAnnouncements(Long id){
+        System.out.println("was called in service");
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Company not found"));
-        if (!company.getActive()) {
-            throw new BadRequestException("Company is not active");
-        }
-        List<Announcements> announcements = company.getAnnouncements();
+        System.out.println("service did not throw error - company: " + company);
+        List<Announcements> announcements = announcementRepository.findAnnouncementsByCompanyId(company.getId());
         return announcementMapper.entitiesToDtos(announcements);
 
     }
@@ -111,9 +109,6 @@ public class CompanyServiceImpl implements CompanyService {
         // Find company by id
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Company not found"));
-        if (!company.getActive()) {
-            throw new BadRequestException("Company is not active");
-        }
         // Create new announcement object
         Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
         announce.setCompany(company);
@@ -137,9 +132,6 @@ public class CompanyServiceImpl implements CompanyService {
     public List<ProjectDto> getCompanyTeamProjects(long comp_id, long team_id){
     	Company company = companyRepository.findById(comp_id); //Because findById was manually defined, can no longer use .orElseThrow
                 // .orElseThrow(() -> new IllegalArgumentException("Company not found"));
-        if (!company.getActive()) {
-            throw new BadRequestException("Company is not active");
-        }
         Team team = teamRepository.findById(team_id)
         		.orElseThrow(() -> new IllegalArgumentException("Team not found"));
         

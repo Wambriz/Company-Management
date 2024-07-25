@@ -9,7 +9,7 @@ import java.io.Serial;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BedRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException{
 
     @Serial
     private static final long serialVersionUID = 3245571154243300505L;

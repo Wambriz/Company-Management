@@ -5,7 +5,7 @@ import com.teamblue.Management_App.dtos.CredentialsDto;
 import com.teamblue.Management_App.dtos.FullUserDto;
 import com.teamblue.Management_App.dtos.UserRequestDto;
 import com.teamblue.Management_App.entities.User;
-import com.teamblue.Management_App.exception.BadRequestException;
+import com.teamblue.Management_App.exceptions.BadRequestException;
 import com.teamblue.Management_App.mappers.UserMapper;
 import com.teamblue.Management_App.repositories.UserRepository;
 import com.teamblue.Management_App.services.UserService;

@@ -45,8 +45,7 @@ export class BackendService {
     }
   }
 
-  // WARNING!!!! DO NOT DELETE! REAL LOGIN AND FETCH ANNOUNCEMENTS METHODS TO BE USED ONCE BACKEND IS EMPLAMENTED////////////////////////////////
-
+  
   login(credentials: CredentialsDto): Observable<FullUserDto> {
     return this.http.post<FullUserDto>(
       this.backendUrl + 'users/login',
@@ -54,14 +53,10 @@ export class BackendService {
     );
   }
 
-  // fetchAnnouncements(id: number): AnnouncementDto[] {
-  //   const url = this.backendUrl + `company/${id}/announcements`;
-  //   let announcements: AnnouncementDto[] = [];
-  //   this.http.get<AnnouncementDto[]>(url).subscribe(
-  //     (data) => (announcements = data),
-  //     (error) => console.error('Error fetching announcements', error)
-  //   ); return announcements;
-  // }
+  fetchAnnouncements(id: number): Observable<AnnouncementDto[]> {
+    const url = this.backendUrl + `company/${id}/announcements`;
+    return this.http.get<AnnouncementDto[]>(url);
+  }
 
   createAnnouncement(id: number, announcement: CreateAnnouncementDto): Observable<AnnouncementDto> {
     const url = this.backendUrl + `company/${id}/announcement`;
@@ -79,8 +74,7 @@ export class BackendService {
     return this.http.post(this.backendUrl + `company/${id}/user`, user);
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
   //Example of insantiating an object from our models:
   team1: TeamDto = {
@@ -534,10 +528,6 @@ export class BackendService {
     //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
     this.getTeamProjects(this.currentTeam).push(newProjectDto);
     return newProjectDto;
-  }
-  fetchAnnouncements(companyId: number): AnnouncementDto[] {
-    console.log('Using test data for announcements');
-    return this.mockAnnouncements;
   }
   getCurrentTeam(): TeamDto{
     return this.currentTeam

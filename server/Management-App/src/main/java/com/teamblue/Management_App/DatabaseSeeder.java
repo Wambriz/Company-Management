@@ -39,12 +39,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         Company company1 = new Company();
         company1.setName("Tech Corp");
         company1.setDescription("A leading technology company");
-        company1.setActive(true); // Setting the active field
 
         Company company2 = new Company();
         company2.setName("Innovate Inc");
         company2.setDescription("Innovating the future");
-        company2.setActive(true); // Setting the active field
 
         companyRepository.saveAll(List.of(company1, company2));
     }
