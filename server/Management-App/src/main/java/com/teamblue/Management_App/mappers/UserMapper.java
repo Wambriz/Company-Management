@@ -3,6 +3,7 @@ package com.teamblue.Management_App.mappers;
 import java.util.List;
 
 import com.teamblue.Management_App.dtos.FullUserDto;
+import com.teamblue.Management_App.dtos.UserRequestDto;
 import com.teamblue.Management_App.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,5 +18,7 @@ public interface UserMapper {
 
     List<FullUserDto> entitiesToDtos(List<User> entities);
 	
-	User RequestDtoToEntity(FullUserDto fullUserDto);
+	User FullUserDtoToEntity(FullUserDto fullUserDto);
+
+    User UserRequestDtoToEntity(UserRequestDto userRequestDto);
 }

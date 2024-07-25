@@ -10,7 +10,8 @@ import {
   TeamDto,
   TeamRequestDto,
   CreateAnnouncementDto,
-  ProjectRequestDto
+  ProjectRequestDto,
+  UserRequestDto
 } from './models';
 
 @Injectable({
@@ -72,6 +73,10 @@ export class BackendService {
     const id = selectedCompany.id;
     const url = this.backendUrl + `company/${id}/users`;
     return this.http.get<FullUserDto[]>(url);
+  }
+
+  createUser(user: UserRequestDto, id: number): Observable<any> {
+    return this.http.post(this.backendUrl + `company/${id}/user`, user);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -22,6 +22,7 @@ import { AnnouncementFormComponent } from './home-announcements/announcement-for
 import { ProjectCreationPopupComponent } from './team-projects/project-creation-popup/project-creation-popup.component';
 import { ProjectEditPopupComponent } from './team-projects/project-edit-popup/project-edit-popup.component';
 import { UsersRegComponent } from './users-reg/users-reg.component';
+import { AddUserOverlayComponent } from './users-reg/add-user-overlay/add-user-overlay.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -50,7 +51,8 @@ const routes: Routes = [
     AnnouncementFormComponent,
     ProjectCreationPopupComponent,
     ProjectEditPopupComponent,
-    UsersRegComponent
+    UsersRegComponent,
+    AddUserOverlayComponent
   ],
   imports: [
     BrowserModule,
