@@ -20,6 +20,8 @@ public interface CompanyService {
 	List<TeamDto> getTeamsByCompanyId(long id); //New method to grab a teams of a company
     TeamDto createTeam(long id, TeamRequestDto newTeam);
     ProjectDto updateProject(Long companyId, Long teamId, ProjectDto projectDto);
+
+    ProjectDto createProject(Long companyId, Long teamId, ProjectRequestDto projectRequestDto);
 }
 
 
