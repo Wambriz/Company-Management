@@ -512,22 +512,20 @@ export class BackendService {
     // Nothing else to return, because now getTeams() needs to be ran again where needed
   }
 
-  createProject(newProjectRequestDto: ProjectRequestDto): void {
-    //Here we would communicate with our endpoint, save our new project, and then
-    //make another call to fetch the list of projects
+  async createProject(newProjectRequestDto: ProjectRequestDto): Promise<void> {
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+    const teamId = newProjectRequestDto.team.id; //Get project team's ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
 
-    //For now, pretend to do that by manually creating a new TeamDto
-    const newProjectDto: ProjectDto = {
-      id: 999,
-      name: newProjectRequestDto.name,
-      description: newProjectRequestDto.description,
-      active: newProjectRequestDto.active,
-      team: this.currentTeam
-    };
-
-    //TODO: Implement creating a project via our backend
-    //Adding our new project to our current list of team projects 
-    // this.getTeamProjects(this.currentTeam).push(newProjectDto);  //(Later our getTeamProjects method will simply fetch the list of projects in the DB)
+    try { //Try/catch block since we are now awaiting on promises.
+      //Send POST request to id/team endpoint, attaching newProjectRequestDto as RequestBody.
+      await this.http.post<ProjectDto>(url, newProjectRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
+    } catch (error) {
+      console.error('Error posting team:', error);
+    }
   }
   updateProject(newProjectDto: ProjectDto): ProjectDto {
     //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.

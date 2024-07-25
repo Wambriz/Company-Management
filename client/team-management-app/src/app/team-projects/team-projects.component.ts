@@ -26,8 +26,8 @@ export class TeamProjectsComponent implements OnInit{
     this.showCreateProjectPopup = true;
   }
 
-  closeProjectPopup() {
-    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
+  async closeProjectPopup() {
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch projects from DB
     this.showCreateProjectPopup = false;
   }
 
@@ -36,8 +36,8 @@ export class TeamProjectsComponent implements OnInit{
     this.showEditProjectPopup = true;
   }
 
-  closeEditProjectPopup() {
-    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
+  async closeEditProjectPopup() {
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch projects from DB
     this.showEditProjectPopup = false;
 
   }
