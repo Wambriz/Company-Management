@@ -5,6 +5,7 @@ import com.teamblue.Management_App.dtos.TeamDto;
 import com.teamblue.Management_App.dtos.TeamRequestDto;
 import com.teamblue.Management_App.entities.Company;
 import com.teamblue.Management_App.entities.Team;
+import com.teamblue.Management_App.entities.User;
 import com.teamblue.Management_App.mappers.TeamMapper;
 import com.teamblue.Management_App.mappers.UserMapper;
 import com.teamblue.Management_App.repositories.CompanyRepository;
@@ -48,8 +49,18 @@ public class CompanyServiceImpl implements CompanyService {
         Company teamCompany = companyRepository.findById(companyId).get(); //Get the company via the ID
         newTeamEntity.setCompany(teamCompany); //Set the company to this entity to establish the relationship
 
-        //Third, Save entity into the DB
+        //Third, Save entity into the DB (relationships established with Users should also be reflected)
         Team savedTeam = teamRepository.saveAndFlush(newTeamEntity);
+
+        //Fourth, establish relationships for each employee by assigning each one with the current team and save
+        for (User newTeammember : newTeamEntity.getUsers()) { //For every user in the new team
+            //Fetch that user from the DB, and assign it a team, then save it.
+            User dbTeamMember = userRepository.findById(newTeammember.getId()).get();
+            dbTeamMember.getTeams().add(savedTeam);
+            userRepository.saveAndFlush(dbTeamMember);
+        }
+
+
         return teamMapper.entityToDto(savedTeam);//Return the TeamDto we just pushed up (it will now include the ID)
     }
 }
