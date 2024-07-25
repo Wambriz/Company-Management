@@ -9,7 +9,7 @@ import { BackendService } from '../../backend.service';
 })
 export class TeamCardComponent implements OnInit{
 listOfTeams: TeamDto[] = []; //This will represent all of the teams fetched from our backend
-
+projectCounts: {[teamId: string]: number} = {} //New map of team id - project counts
 
 //INFO: TeamDto comes with id, name, description, and a list of users[], which are a list of [BasicUserDto]
 //INFO: BasicUserDto comes with id, ProfileDto{}, isAdmin, active, and status
@@ -18,12 +18,13 @@ constructor(private backendService: BackendService) {
 
 async ngOnInit(): Promise<void> { //OnInit actions here
   this.listOfTeams = await this.backendService.getListOfTeams() //Get teams from backend (await on this promise to get the actual value)
-}
 
-getProjectCountByTeamDto(team: TeamDto): number {//This method takes a TeamDto, and returns the number of projects that team is involved with
-  //First, get projects from endpoint from given ID
-  //Second, return the number of the length of the returned array
-  return this.backendService.getTeamProjects(team).length
+  //Also pre-calculate project counts here
+  for (let team of this.listOfTeams) { //For every team of this company that we fetched
+    const projects = await this.backendService.getTeamProjects(team); //Get their projects from the DB
+    this.projectCounts[team.id] = projects.length; //Get their project count and store them into our map of {id: project.length}
+  }
+
 }
 
 setCurrentTeam(team: TeamDto) {//When this is called, the currentTeam variable in our service is updated (for our projects elements that come right after)

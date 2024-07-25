@@ -33,14 +33,22 @@ export class BackendService {
     return this.team2;
   }
 
-  getTeamProjects(team: TeamDto): ProjectDto[] {
+  async getTeamProjects(team: TeamDto): Promise<ProjectDto[]> {
     //Fetches team projects based on given TeamDto
-    //Simply returns dummy data. In real version, we would make a call to API here.
-    if (team === this.team1) {
-      return this.team1Projects;
-    } else if (team === this.team2) {
-      return this.team2Projects;
-    } else {
+    //use API endpoint /company/is/teams/id/projects
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+    const teamId = team.id;
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/projects`; // Endpoint URL
+    
+    try { //Try/catch block since we are now awaiting on promises.
+      const projects: ProjectDto[] = await this.http.get<ProjectDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [ProjectDto]
+      // console.log("Projects fetched from backend:" + JSON.stringify(projects));
+      return projects; //Return the fetched [ProjectDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
       return [];
     }
   }
