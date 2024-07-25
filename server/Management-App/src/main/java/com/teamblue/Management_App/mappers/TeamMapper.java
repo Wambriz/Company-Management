@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
 import com.teamblue.Management_App.dtos.TeamDto;
 import com.teamblue.Management_App.entities.Team;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring")
 public interface TeamMapper {
     TeamDto entityToDto(Team entity);
     Team dtoToEntity(TeamDto teamDto);
