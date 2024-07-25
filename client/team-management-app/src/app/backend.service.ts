@@ -46,10 +46,10 @@ export class BackendService {
           return -1;
         }
         if (a.name > b.name) {
-            return 1;
+          return 1;
         }
         return 0;
-      }); 
+      });
       return projects; //Return the fetched [ProjectDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
@@ -82,23 +82,51 @@ export class BackendService {
     return this.http.get<FullUserDto[]>(url);
   }
 
-  createUser(user: UserRequestDto, id: number): Observable<any> {
-    return this.http.post(this.backendUrl + `company/${id}/user`, user);
+  async createUser(
+    user: UserRequestDto,
+    id: number
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      await this.http
+        .post(this.backendUrl + `company/${id}/user`, user)
+        .toPromise();
+      return { success: true };
+    } catch (error: unknown) {
+      let errorMessage = 'Failed to create the user. Pleae try again later.';
+      if (error instanceof HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Backend error
+          errorMessage =
+            error.error.message || error.statusText || errorMessage;
+        }
+      }
+
+      return { success: false, error: errorMessage };
+    }
   }
-  
-  async getListOfTeams(): Promise<TeamDto[]> { //As we are using promises, we must await them to get the actual value.
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
-    if (!selectedCompany) { //If selected company is null (nothing in local storage), return nothing
-      console.error("No company found")
+
+  async getListOfTeams(): Promise<TeamDto[]> {
+    //As we are using promises, we must await them to get the actual value.
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
+    if (!selectedCompany) {
+      //If selected company is null (nothing in local storage), return nothing
+      console.error('No company found');
       return [];
     }
     const companyId = selectedCompany.id; // Get current company ID
-  
+
     // Create and use URL
     const url = this.backendUrl + `company/${companyId}/teams`; // Endpoint URL
-  
-    try { //Try/catch block since we are now awaiting on promises.
-      const teams: TeamDto[] = await this.http.get<TeamDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [TeamDto]
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
+      const teams: TeamDto[] =
+        (await this.http.get<TeamDto[]>(url).toPromise()) || []; // Send get request to the endpoint and await the promise to get [TeamDto]
       // console.log("Teams fetched from backend:" + JSON.stringify(teams));
       return teams; //Return the fetched [TeamDto] we awaited for
     } catch (error) {
@@ -107,16 +135,21 @@ export class BackendService {
     }
   }
 
-  async getActiveMembers(): Promise<FullUserDto[]> { //As we are using promises, we must await them to get the actual value.
+  async getActiveMembers(): Promise<FullUserDto[]> {
+    //As we are using promises, we must await them to get the actual value.
     //Fetch all of the current company's users
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
-  
+
     // Create and use URL
     const url = this.backendUrl + `company/${companyId}/users`; // Endpoint URL
-  
-    try { //Try/catch block since we are now awaiting on promises.
-      const teams: FullUserDto[] = await this.http.get<FullUserDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
+      const teams: FullUserDto[] =
+        (await this.http.get<FullUserDto[]>(url).toPromise()) || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
       return teams; //Return the fetched [FullUserDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
@@ -152,24 +185,29 @@ export class BackendService {
           errorMessage = `Error: ${error.error.message}`;
         } else {
           // Backend error
-          errorMessage = error.error.message || error.statusText || errorMessage;
+          errorMessage =
+            error.error.message || error.statusText || errorMessage;
         }
       }
-  
+
       return { success: false, error: errorMessage };
     }
     // Nothing else to return, because now getTeams() needs to be ran again where needed
   }
 
   async createProject(newProjectRequestDto: ProjectRequestDto): Promise<void> {
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
     const teamId = newProjectRequestDto.team.id; //Get project team's ID
-  
-    // Create and use URL
-    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
 
-    try { //Try/catch block since we are now awaiting on promises.
+    // Create and use URL
+    const url =
+      this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
       //Send POST request to id/team endpoint, attaching newProjectRequestDto as RequestBody.
       await this.http.post<ProjectDto>(url, newProjectRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
     } catch (error) {
@@ -177,29 +215,33 @@ export class BackendService {
     }
   }
   async updateProject(newProjectDto: ProjectDto): Promise<void> {
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
     const teamId = newProjectDto.team.id; //Get project team's ID
-  
-    // Create and use URL
-    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
 
-    try { //Try/catch block since we are now awaiting on promises.
+    // Create and use URL
+    const url =
+      this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
       //Send PATCH request to id/team endpoint, attaching newProjectDto as RequestBody.
       await this.http.patch<ProjectDto>(url, newProjectDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
     } catch (error) {
       console.error('Error posting team:', error);
     }
   }
-  getCurrentTeam(): TeamDto{
-    return this.currentTeam
+  getCurrentTeam(): TeamDto {
+    return this.currentTeam;
   }
-  setCurrentTeam(teamDto: TeamDto) { //Assign current team with a new TeamDto
+  setCurrentTeam(teamDto: TeamDto) {
+    //Assign current team with a new TeamDto
     this.currentTeam = teamDto;
   }
 
-
-  //DUMMY DATA AND METHODS: 
+  //DUMMY DATA AND METHODS:
 
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
   //Example of insantiating an object from our models:
@@ -473,7 +515,6 @@ export class BackendService {
   getDummyTeam2(): TeamDto {
     return this.team2;
   }
-
 
   // Devin test block
   //POST /users/login test

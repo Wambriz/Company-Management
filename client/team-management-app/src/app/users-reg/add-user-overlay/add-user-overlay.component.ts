@@ -10,7 +10,7 @@ import { CredentialsDto, ProfileDto, UserRequestDto } from '../../models';
 })
 export class AddUserOverlayComponent {
   createUserForm: FormGroup;
-  errorMessage: string | null = null;
+  errorMessage: string | undefined;
 
   @Output() close = new EventEmitter<void>();
   @Output() userCreated = new EventEmitter<void>();
@@ -27,7 +27,7 @@ export class AddUserOverlayComponent {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.createUserForm.invalid) {
       this.errorMessage = 'All fields are required.'; //Sets the error message if Validators detemines this is a invalid login attempt -Devin
       return;
@@ -60,15 +60,12 @@ export class AddUserOverlayComponent {
       const selectedCompanyString = localStorage.getItem('selectedCompany');
       if (selectedCompanyString) {
         const selectedCompany = JSON.parse(selectedCompanyString);
-        this.backendService.createUser(userRequest, selectedCompany.id).subscribe(
-          (response) => {
-            // alert('User created successfully');
-            this.userCreated.emit();
-          },
-          (error) => {
-            alert('Error creating user');
+        const result = await this.backendService.createUser(userRequest, selectedCompany.id);
+        if(result.success) {
+          this.userCreated.emit();
+          } else {
+            this.errorMessage = result.error;
           }
-        );
       }
     }
     
