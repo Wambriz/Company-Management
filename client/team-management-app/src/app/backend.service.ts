@@ -46,6 +46,15 @@ export class BackendService {
     try { //Try/catch block since we are now awaiting on promises.
       const projects: ProjectDto[] = await this.http.get<ProjectDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [ProjectDto]
       // console.log("Projects fetched from backend:" + JSON.stringify(projects));
+      projects.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+      }); 
       return projects; //Return the fetched [ProjectDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
