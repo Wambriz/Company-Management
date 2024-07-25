@@ -19,8 +19,9 @@
 }
 
 .add-button {
+  margin: 23px;
   width: 400px;
-  height: 164px;
+  height: 198px;
   border-radius: 20px;
   text-decoration: none;
   font: inherit;
