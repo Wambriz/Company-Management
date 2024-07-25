@@ -28,7 +28,7 @@
     <button (click)="openForm()">Add User</button>
     <div class="popup" *ngIf="showForm">
         <!--Popup that appears when showPopup is true, like when above button is clicked-->
-        <app-add-user-overlay (close)="closeForm()"></app-add-user-overlay>
+        <app-add-user-overlay (close)="closeForm()" (userCreated)="onUserCreated()"></app-add-user-overlay>
         <!--Close popup when this component sends a (close) event-->
     </div>
 </div>

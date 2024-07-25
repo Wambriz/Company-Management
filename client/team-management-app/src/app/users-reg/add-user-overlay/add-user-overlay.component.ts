@@ -13,6 +13,7 @@ export class AddUserOverlayComponent {
   errorMessage: string | null = null;
 
   @Output() close = new EventEmitter<void>();
+  @Output() userCreated = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder, private backendService: BackendService) {
     this.createUserForm = this.fb.group({
@@ -61,9 +62,8 @@ export class AddUserOverlayComponent {
         const selectedCompany = JSON.parse(selectedCompanyString);
         this.backendService.createUser(userRequest, selectedCompany.id).subscribe(
           (response) => {
-            alert('User created successfully');
-            console.log('User created successfuly', response);
-            this.close.emit();
+            // alert('User created successfully');
+            this.userCreated.emit();
           },
           (error) => {
             alert('Error creating user');

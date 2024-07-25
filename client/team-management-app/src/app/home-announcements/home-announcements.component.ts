@@ -5,7 +5,7 @@ import { BackendService } from '../backend.service';
 @Component({
   selector: 'app-home-announcements',
   templateUrl: './home-announcements.component.html',
-  styleUrls: ['./home-announcements.component.css']
+  styleUrls: ['./home-announcements.component.css'],
 })
 export class HomeAnnouncementsComponent implements OnInit {
   announcements: AnnouncementDto[] = [];
@@ -13,9 +13,7 @@ export class HomeAnnouncementsComponent implements OnInit {
   user: FullUserDto | null = null;
   isAdmin: boolean = false;
 
-  constructor(
-    private backendService: BackendService
-  ) {}
+  constructor(private backendService: BackendService) {}
 
   ngOnInit(): void {
     this.loadAnnouncements();
@@ -31,12 +29,13 @@ export class HomeAnnouncementsComponent implements OnInit {
     const selectedCompanyString = localStorage.getItem('selectedCompany');
     if (selectedCompanyString) {
       const selectedCompany: CompanyDto = JSON.parse(selectedCompanyString);
-      console.log("fetching announcements from component.ts")
-      this.backendService.fetchAnnouncements(selectedCompany.id).subscribe((announcements) => {
-        this.announcements = announcements.sort((a, b) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+      this.backendService
+        .fetchAnnouncements(selectedCompany.id)
+        .subscribe((announcements) => {
+          this.announcements = announcements.sort((a, b) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          });
         });
-      });
     } else {
       console.error('No company selected.');
     }
