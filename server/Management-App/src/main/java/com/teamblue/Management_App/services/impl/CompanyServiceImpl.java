@@ -127,13 +127,12 @@ public class CompanyServiceImpl implements CompanyService {
         if (!company.getActive()) {
             throw new BadRequestException("Company is not active");
         }
-        List<Team> teams = company.getTeams().stream()
-        		.filter(team ->  team.getId() == team_id)
-        		.toList();
+        Team team = teamRepository.findById(team_id)
+        		.orElseThrow(() -> new IllegalArgumentException("Team not found"));
         
-        System.out.println(teams);
+        System.out.println();
         
-    	return null;
+    	return projectMapper.entitiesToDtos(team.getProjects());
     }
     @Override
     public ProjectDto updateProject(Long companyId, Long teamId, ProjectDto projectDto) {
