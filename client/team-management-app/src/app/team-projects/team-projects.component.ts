@@ -46,4 +46,12 @@ export class TeamProjectsComponent implements OnInit{
   updateTeamProjectsFromDatabase() {
     this.teamProjects = this.backendService.getTeamProjects(this.currentTeam); //Fetch newest version of projects in the database
   }
+
+  projectStatus(status: boolean): string {
+    if (status) {
+      return "Active";
+    } else {
+      return "Inactive"
+    }
+  }
 }
