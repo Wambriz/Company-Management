@@ -1,17 +1,18 @@
-<div class="popup">
+
+<div>
   <h2>Create Announcement</h2>
   <form [formGroup]="createAnnouncementForm" (ngSubmit)="submitAnnouncement()">
     <div>
-      <label for="title">Title</label>
-      <input id="title" formControlName="title" />
+      <label class="textlabel" for="title">Title: </label><br/>
+      <input class="textfield" id="title" formControlName="title" />
     </div>
     <div>
-      <label for="message">Message</label>
-      <input id="message" formControlName="message" />
+      <label class="textlabel" for="message">Message: </label><br/>
+      <input class="textfield" id="message" formControlName="message" />
     </div>
     <div class="button-group">
       <button type="submit" [disabled]="createAnnouncementForm.invalid">Submit</button>
-      <button type="button" (click)="closeForm()">Cancel</button>
+      <button class="cancel-button" type="button" (click)="closeForm()">Cancel</button>
     </div>
   </form>
 </div>

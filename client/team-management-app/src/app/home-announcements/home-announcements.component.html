@@ -1,7 +1,11 @@
 <app-navbar></app-navbar>
 <div class="home-announcements-container">
-  <h2>Announcements</h2>
-  <button (click)="openForm()" *ngIf="isAdmin">Create Announcement</button>
+  <div>
+    <h2>Announcements</h2>
+    <div class="spacing">
+      <button class="create-button" (click)="openForm()" *ngIf="isAdmin">Create Announcement</button>
+    </div>
+  </div>
   
   <div *ngIf="announcements.length > 0" class="announcements">
     <ul>
