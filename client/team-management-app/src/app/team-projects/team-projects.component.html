@@ -17,7 +17,7 @@
             </div>
             <p>{{project.description}}</p>
         </div>
-        <button (click)="openEditProjectPopup(project)">Edit current project</button> <!--Trigger openPopup() on a click event-->
+        <button *ngIf="isAdmin" (click)="openEditProjectPopup(project)">Edit current project</button> <!--Trigger openPopup() on a click event-->
     </div>
     <div class="popup" *ngIf="showEditProjectPopup"> <!--Popup that appears when showEditProjectPopup is true, like when above button is clicked-->
         <app-project-edit-popup [projectData]="projectData" class="popup-content" (close)="closeEditProjectPopup()"></app-project-edit-popup> <!--Close Project popup when this component sends a (close) event-->
