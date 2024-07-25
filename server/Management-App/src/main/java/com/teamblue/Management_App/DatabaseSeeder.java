@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -109,11 +108,23 @@ public class DatabaseSeeder implements CommandLineRunner {
         team2.setUsers(List.of(user2)); // Associate users with team
 
         teamRepository.saveAll(List.of(team1, team2));
+
+        // Update users to include the teams
+        user1.setTeams(List.of(team1));
+        user2.setTeams(List.of(team1, team2));
+        userRepository.saveAll(List.of(user1, user2));
     }
 
     private void seedProjects() {
         Team team1 = teamRepository.findByName("Development Team");
+        if (team1 == null) {
+            throw new IllegalArgumentException("Team not found: Development Team");
+        }
+
         Team team2 = teamRepository.findByName("Marketing Team");
+        if (team2 == null) {
+            throw new IllegalArgumentException("Team not found: Marketing Team");
+        }
 
         Project project1 = new Project();
         project1.setName("Project Alpha");
@@ -150,4 +161,6 @@ public class DatabaseSeeder implements CommandLineRunner {
         announcementsRepository.saveAll(List.of(announcement1, announcement2));
     }
 }
+
+
 
