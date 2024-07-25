@@ -4,5 +4,5 @@
     <ng-container *ngIf="showTeamCards">
         <app-team-card></app-team-card>
     </ng-container>
-    <app-create-team-card (close)="resetTeamCards()"></app-create-team-card>
+    <app-create-team-card *ngIf="isAdmin" (close)="resetTeamCards()"></app-create-team-card>
 </div>

@@ -365,7 +365,7 @@ export class BackendService {
   
     try { //Try/catch block since we are now awaiting on promises.
       const teams: TeamDto[] = await this.http.get<TeamDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [TeamDto]
-      console.log("Teams fetched from backend:" + JSON.stringify(teams));
+      // console.log("Teams fetched from backend:" + JSON.stringify(teams));
       return teams; //Return the fetched [TeamDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
