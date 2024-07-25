@@ -33,14 +33,22 @@ export class BackendService {
     return this.team2;
   }
 
-  getTeamProjects(team: TeamDto): ProjectDto[] {
+  async getTeamProjects(team: TeamDto): Promise<ProjectDto[]> {
     //Fetches team projects based on given TeamDto
-    //Simply returns dummy data. In real version, we would make a call to API here.
-    if (team === this.team1) {
-      return this.team1Projects;
-    } else if (team === this.team2) {
-      return this.team2Projects;
-    } else {
+    //use API endpoint /company/is/teams/id/projects
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+    const teamId = team.id;
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/projects`; // Endpoint URL
+    
+    try { //Try/catch block since we are now awaiting on promises.
+      const projects: ProjectDto[] = await this.http.get<ProjectDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [ProjectDto]
+      // console.log("Projects fetched from backend:" + JSON.stringify(projects));
+      return projects; //Return the fetched [ProjectDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
       return [];
     }
   }
@@ -517,16 +525,18 @@ export class BackendService {
       team: this.currentTeam
     };
 
+    //TODO: Implement creating a project via our backend
     //Adding our new project to our current list of team projects 
-    this.getTeamProjects(this.currentTeam).push(newProjectDto);  //(Later our getTeamProjects method will simply fetch the list of projects in the DB)
+    // this.getTeamProjects(this.currentTeam).push(newProjectDto);  //(Later our getTeamProjects method will simply fetch the list of projects in the DB)
   }
   updateProject(newProjectDto: ProjectDto): ProjectDto {
     //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.
 
     //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used. 
 
+    //TODO: Implement updating a project via our backend
     //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
-    this.getTeamProjects(this.currentTeam).push(newProjectDto);
+    // this.getTeamProjects(this.currentTeam).push(newProjectDto);
     return newProjectDto;
   }
   getCurrentTeam(): TeamDto{
