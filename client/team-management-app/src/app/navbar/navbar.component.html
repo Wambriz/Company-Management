@@ -1,21 +1,22 @@
 <nav>
+    <img class="" src="../../assets/images/login_icon.png" alt=""/>
     <div class="user-info">
         <span *ngIf="isAdmin; else userInfo">Acting as admin</span>
         <ng-template #userInfo>{{ user?.profile?.firstname }} {{ user?.profile?.lastname?.[0] }}.</ng-template>
     </div>
     <a routerLink="/home-announcements">
-        <h1 class="link">Home</h1>
+        Home
     </a>
     <a *ngIf="isAdmin" routerLink="/company">
-        <h1 class="link">Company</h1>
+        Company
     </a>
     <a routerLink="/teams">
-        <h1 class="link">Teams</h1>
+        Teams
     </a>
     <a *ngIf="isAdmin" routerLink="/users-reg">
-        <h1 class="link">Users</h1>
+        Users
     </a>
     <a routerLink="/login">
-        <h1 class="link">Logout</h1>
+        Logout
     </a>
 </nav>

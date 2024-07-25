@@ -6,13 +6,18 @@
   <div *ngIf="announcements.length > 0" class="announcements">
     <ul>
       <li *ngFor="let announcement of announcements">
-        <strong>{{ announcement.author.profile.firstname }} {{ announcement.author.profile.lastname }}</strong>, {{ announcement.date | date:'medium' }}<br>
-        {{ announcement.message }}
+        <div class="announcements-header">
+          <span class="announcements-name">{{ announcement.author.profile.firstname }} {{ announcement.author.profile.lastname }}</span> 
+          <span class="announcements-date">{{ announcement.date | date:'medium' }}</span>
+        </div>
+        <!-- <a class="announcements-name">{{ announcement.author.profile.firstname }} {{ announcement.author.profile.lastname }}</a> 
+        <a>{{ announcement.date | date:'medium' }}</a> -->
+        <p>{{ announcement.message }}</p>
       </li>
     </ul>
   </div>
   <div *ngIf="announcements.length === 0">
-    <p>No announcements available.</p>
+    <p class="announcements-text"> No announcements available.</p>
   </div>
 </div>
 
