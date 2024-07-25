@@ -15,17 +15,15 @@ export class TeamCreationPopupComponent implements OnInit{
     teamMembers: FullUserDto[];
     selectedMembers: FullUserDto[] = [];
 
-    constructor(private formBuilder: FormBuilder, private backendService: BackendService) {
+    constructor(private formBuilder: FormBuilder, private backendService: BackendService) {}
+
+    async ngOnInit(): Promise<void> {
       this.teamForm = this.formBuilder.group({ //Building a new form grouo
         name: [''], //Making individual FormControls that make up this FormGroup
         description: [''],
         selectedUser: ['']
       })
-      this.teamMembers = backendService.getActiveMembers();
-    }
-
-    ngOnInit(): void {
-
+      this.teamMembers = await this.backendService.getActiveMembers();
     }
 
     onSubmit() {

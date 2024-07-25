@@ -470,9 +470,21 @@ export class BackendService {
   //   }
   // }
 
-  getActiveMembers(): FullUserDto[] {
-    //Later, this method should accept a company ID when making request to backend for active members of a company
-    return this.company2TeamMembers;
+  async getActiveMembers(): Promise<FullUserDto[]> { //As we are using promises, we must await them to get the actual value.
+    //Fetch all of the current company's users
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/users`; // Endpoint URL
+  
+    try { //Try/catch block since we are now awaiting on promises.
+      const teams: FullUserDto[] = await this.http.get<FullUserDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
+      return teams; //Return the fetched [FullUserDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
+      return [];
+    }
   }
 
   async createTeam(newTeamRequestDto: TeamRequestDto): Promise<void> {
