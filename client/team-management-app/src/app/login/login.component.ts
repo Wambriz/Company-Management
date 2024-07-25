@@ -19,27 +19,38 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required], //Validators.required makes the field a requirement -Devin
+      username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.errorMessage = 'All fields are required.'; //Sets the error message if Validators detemines this is a invalid login attempt -Devin
+      const usernameControl = this.loginForm.get('username');
+      const passwordControl = this.loginForm.get('password');
+  
+      if (usernameControl?.hasError('required')) {
+        this.errorMessage = 'Email is required.';
+      } else if (usernameControl?.hasError('email')) {
+        this.errorMessage = 'Invalid email format.';
+      } else if (passwordControl?.hasError('required')) {
+        this.errorMessage = 'Password is required.';
+      } else {
+        this.errorMessage = 'All fields are required.';
+      }
       return;
     }
-
+  
     const credentials: CredentialsDto = this.loginForm.value;
-
+  
     this.backendService.login(credentials).subscribe({
       next: (user: FullUserDto) => {
-        localStorage.setItem('user', JSON.stringify(user)); //Saves User to localStorage -Devin
+        localStorage.setItem('user', JSON.stringify(user));
         if (user.isAdmin) {
-          this.router.navigate(['/select-company']); //Navagate to the corrent page based on if the user is an admin or not. -Devin
+          this.router.navigate(['/select-company']);
         } else {
           if (user.companies && user.companies.length > 0) {
-            const selectedCompany = user.companies[0]; //User should only have 1 company asigned, regqurdless I'm only pulling the 1st one, if there is one, to storage -Devin
+            const selectedCompany = user.companies[0];
             localStorage.setItem('selectedCompany', JSON.stringify(selectedCompany));
           }
           this.router.navigate(['/home-announcements']);
