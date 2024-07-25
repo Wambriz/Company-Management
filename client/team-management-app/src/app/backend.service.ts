@@ -475,19 +475,22 @@ export class BackendService {
     return this.company2TeamMembers;
   }
 
-  createTeam(newTeamRequestDto: TeamRequestDto): void {
-    //Here we would communicate with out endpoint, save our new team, and then
-    //Make another call to fetch a list of teams.
+  async createTeam(newTeamRequestDto: TeamRequestDto): Promise<void> {
+    //This method will send a TeamRequestDto with the company ID path variable.
+    
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/team`; // Endpoint URL
 
-    //For now, pretend to do that by manually creating a new TeamDto
-    const newTeamDto: TeamDto = {
-      id: 999,
-      name: newTeamRequestDto.name,
-      description: newTeamRequestDto.description,
-      users: newTeamRequestDto.users,
-    };
-
-    this.addDummyTeam(newTeamDto); //Adding our TeamDto response from the database to our list of teams
+    try { //Try/catch block since we are now awaiting on promises.
+      //Send POST request to id/team endpoint, attaching newTeamRequestDto as RequestBody.
+      await this.http.post<TeamDto>(url, newTeamRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
+    } catch (error) {
+      console.error('Error posting team:', error);
+    }
+    // Nothing else to return, because now getTeams() needs to be ran again where needed
   }
 
   createProject(newProjectRequestDto: ProjectRequestDto): void {

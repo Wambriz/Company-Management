@@ -2,6 +2,7 @@ package com.teamblue.Management_App.controllers;
 
 import com.teamblue.Management_App.dtos.FullUserDto;
 import com.teamblue.Management_App.dtos.TeamDto;
+import com.teamblue.Management_App.dtos.TeamRequestDto;
 import com.teamblue.Management_App.services.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,15 @@ public class CompanyController {
         
         //Return List of TeamDto
         return companyService.getTeamsByCompanyId(id);
+    }
+
+    @PostMapping("/{id}/team")
+    public TeamDto createTeam(@PathVariable long id, @RequestBody TeamRequestDto newTeam) { //Put new team into DB
+        //newTeam is the TeamRequestDto our frontend sends, captured with @RequestBody
+
+        //Return the TeamDto of the Team entity we just saved
+        return companyService.createTeam(id, newTeam);
+
     }
 
 
