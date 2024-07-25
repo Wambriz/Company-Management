@@ -23,13 +23,14 @@ import { ProjectCreationPopupComponent } from './team-projects/project-creation-
 import { ProjectEditPopupComponent } from './team-projects/project-edit-popup/project-edit-popup.component';
 import { UsersRegComponent } from './users-reg/users-reg.component';
 import { AddUserOverlayComponent } from './users-reg/add-user-overlay/add-user-overlay.component';
+import { ProjectsGuardService } from './projects-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'select-company', component: SelectCompanyComponent },
   { path: 'home-announcements', component: HomeAnnouncementsComponent },
   { path: 'teams', component: TeamsComponent },
-  { path: 'projects', component: TeamProjectsComponent },
+  { path: 'projects', component: TeamProjectsComponent, canActivate: [ProjectsGuardService] }, //Provide the guard service that decides if route can be routed to
   { path: 'users-reg', component: UsersRegComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
