@@ -4,10 +4,12 @@ package com.teamblue.Management_App.services.impl;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.teamblue.Management_App.dtos.*;
+import com.teamblue.Management_App.exceptions.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import com.teamblue.Management_App.entities.Announcements;
@@ -201,6 +203,15 @@ public class CompanyServiceImpl implements CompanyService {
         //Second: Flesh out Entity by assigning it a Company entity
         Company teamCompany = companyRepository.findById(companyId); //Get the company via the ID
         newTeamEntity.setCompany(teamCompany); //Set the company to this entity to establish the relationship
+
+        List<String> teamNames = new ArrayList<>();
+        for (Team team: teamRepository.findTeamsByCompanyId(teamCompany.getId())) {
+            teamNames.add(team.getName());
+        }
+
+        if (teamNames.contains(newTeamEntity.getName())) {
+            throw new BadRequestException("Team name already used.");
+        }
 
         //Third, Save entity into the DB (relationships established with Users should also be reflected)
         Team savedTeam = teamRepository.saveAndFlush(newTeamEntity);

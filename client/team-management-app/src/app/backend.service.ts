@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { delay, Observable, of, throwError } from 'rxjs';
 import {
   CredentialsDto,
@@ -11,7 +11,7 @@ import {
   TeamRequestDto,
   CreateAnnouncementDto,
   ProjectRequestDto,
-  UserRequestDto
+  UserRequestDto,
 } from './models';
 
 @Injectable({
@@ -19,7 +19,7 @@ import {
 })
 export class BackendService {
   private backendUrl = 'http://localhost:8080/';
-  currentTeam: TeamDto = {id: -1, name: "", description: "", users:[]} //This variable will dynamically change as different team projects are requested
+  currentTeam: TeamDto = { id: -1, name: '', description: '', users: [] }; //This variable will dynamically change as different team projects are requested
 
   constructor(private http: HttpClient) {}
 
@@ -36,15 +36,20 @@ export class BackendService {
   async getTeamProjects(team: TeamDto): Promise<ProjectDto[]> {
     //Fetches team projects based on given TeamDto
     //use API endpoint /company/is/teams/id/projects
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
     const teamId = team.id;
-  
+
     // Create and use URL
-    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/projects`; // Endpoint URL
-    
-    try { //Try/catch block since we are now awaiting on promises.
-      const projects: ProjectDto[] = await this.http.get<ProjectDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [ProjectDto]
+    const url =
+      this.backendUrl + `company/${companyId}/teams/${teamId}/projects`; // Endpoint URL
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
+      const projects: ProjectDto[] =
+        (await this.http.get<ProjectDto[]>(url).toPromise()) || []; // Send get request to the endpoint and await the promise to get [ProjectDto]
       // console.log("Projects fetched from backend:" + JSON.stringify(projects));
       return projects; //Return the fetched [ProjectDto] we awaited for
     } catch (error) {
@@ -53,7 +58,6 @@ export class BackendService {
     }
   }
 
-  
   login(credentials: CredentialsDto): Observable<FullUserDto> {
     return this.http.post<FullUserDto>(
       this.backendUrl + 'users/login',
@@ -66,13 +70,18 @@ export class BackendService {
     return this.http.get<AnnouncementDto[]>(url);
   }
 
-  createAnnouncement(id: number, announcement: CreateAnnouncementDto): Observable<AnnouncementDto> {
+  createAnnouncement(
+    id: number,
+    announcement: CreateAnnouncementDto
+  ): Observable<AnnouncementDto> {
     const url = this.backendUrl + `company/${id}/announcement`;
     return this.http.post<AnnouncementDto>(url, announcement);
   }
 
   getUsers(): Observable<FullUserDto[]> {
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!);
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    );
     const id = selectedCompany.id;
     const url = this.backendUrl + `company/${id}/users`;
     return this.http.get<FullUserDto[]>(url);
@@ -82,7 +91,6 @@ export class BackendService {
     return this.http.post(this.backendUrl + `company/${id}/user`, user);
   }
 
-  
   //Dummy Team 1 with Ai Hoshino, Aqua Hoshino, and Ruby Hoshino
   //Example of insantiating an object from our models:
   team1: TeamDto = {
@@ -346,17 +354,22 @@ export class BackendService {
   addDummyTeam(newTeam: TeamDto): void {
     this.listOfDummyTeams.push(newTeam);
   }
-  
-  async getListOfTeams(): Promise<TeamDto[]> { //As we are using promises, we must await them to get the actual value.
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+
+  async getListOfTeams(): Promise<TeamDto[]> {
+    //As we are using promises, we must await them to get the actual value.
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
-  
+
     // Create and use URL
     const url = this.backendUrl + `company/${companyId}/teams`; // Endpoint URL
-  
-    try { //Try/catch block since we are now awaiting on promises.
-      const teams: TeamDto[] = await this.http.get<TeamDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [TeamDto]
-      console.log("Teams fetched from backend:" + JSON.stringify(teams));
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
+      const teams: TeamDto[] =
+        (await this.http.get<TeamDto[]>(url).toPromise()) || []; // Send get request to the endpoint and await the promise to get [TeamDto]
+      console.log('Teams fetched from backend:' + JSON.stringify(teams));
       return teams; //Return the fetched [TeamDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
@@ -477,16 +490,21 @@ export class BackendService {
   //   }
   // }
 
-  async getActiveMembers(): Promise<FullUserDto[]> { //As we are using promises, we must await them to get the actual value.
+  async getActiveMembers(): Promise<FullUserDto[]> {
+    //As we are using promises, we must await them to get the actual value.
     //Fetch all of the current company's users
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
-  
+
     // Create and use URL
     const url = this.backendUrl + `company/${companyId}/users`; // Endpoint URL
-  
-    try { //Try/catch block since we are now awaiting on promises.
-      const teams: FullUserDto[] = await this.http.get<FullUserDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
+      const teams: FullUserDto[] =
+        (await this.http.get<FullUserDto[]>(url).toPromise()) || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
       return teams; //Return the fetched [FullUserDto] we awaited for
     } catch (error) {
       console.error('Error fetching teams:', error);
@@ -494,33 +512,56 @@ export class BackendService {
     }
   }
 
-  async createTeam(newTeamRequestDto: TeamRequestDto): Promise<void> {
+  async createTeam(
+    newTeamRequestDto: TeamRequestDto
+  ): Promise<{ success: boolean; error?: string }> {
     //This method will send a TeamRequestDto with the company ID path variable.
-    
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
-  
+
     // Create and use URL
     const url = this.backendUrl + `company/${companyId}/team`; // Endpoint URL
 
-    try { //Try/catch block since we are now awaiting on promises.
+    try {
+      //Try/catch block since we are now awaiting on promises.
       //Send POST request to id/team endpoint, attaching newTeamRequestDto as RequestBody.
-      await this.http.post<TeamDto>(url, newTeamRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
-    } catch (error) {
+      await this.http.post<TeamDto>(url, newTeamRequestDto).toPromise();
+      //Await this promise so that we know the operation completes and our DB is updated
+      return { success: true };
+    } catch (error: unknown) {
       console.error('Error posting team:', error);
+      let errorMessage = 'Failed to create the team. Pleae try again later.';
+      if (error instanceof HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Backend error
+          errorMessage = error.error.message || error.statusText || errorMessage;
+        }
+      }
+  
+      return { success: false, error: errorMessage };
     }
     // Nothing else to return, because now getTeams() needs to be ran again where needed
   }
 
   async createProject(newProjectRequestDto: ProjectRequestDto): Promise<void> {
-    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const selectedCompany: CompanyDto = JSON.parse(
+      localStorage.getItem('selectedCompany')!
+    ); // Get Current CompanyDto
     const companyId = selectedCompany.id; // Get current company ID
     const teamId = newProjectRequestDto.team.id; //Get project team's ID
-  
-    // Create and use URL
-    const url = this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
 
-    try { //Try/catch block since we are now awaiting on promises.
+    // Create and use URL
+    const url =
+      this.backendUrl + `company/${companyId}/teams/${teamId}/project`; // Endpoint URL for posting a new project
+
+    try {
+      //Try/catch block since we are now awaiting on promises.
       //Send POST request to id/team endpoint, attaching newProjectRequestDto as RequestBody.
       await this.http.post<ProjectDto>(url, newProjectRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
     } catch (error) {
@@ -530,17 +571,18 @@ export class BackendService {
   updateProject(newProjectDto: ProjectDto): ProjectDto {
     //At this point, we would send our ProjectDto to our backend, which would save our updated project to the DB, and return the result.
 
-    //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used. 
+    //After that, out getTeamProjects() would successfully fetch the updated projects from the database when used.
 
     //TODO: Implement updating a project via our backend
     //For now, simply update the project from the list of team projects by adding it directly (Incorrect behavior, but intentional for the sake of simplicty/time)
     // this.getTeamProjects(this.currentTeam).push(newProjectDto);
     return newProjectDto;
   }
-  getCurrentTeam(): TeamDto{
-    return this.currentTeam
+  getCurrentTeam(): TeamDto {
+    return this.currentTeam;
   }
-  setCurrentTeam(teamDto: TeamDto) { //Assign current team with a new TeamDto
+  setCurrentTeam(teamDto: TeamDto) {
+    //Assign current team with a new TeamDto
     this.currentTeam = teamDto;
   }
 }

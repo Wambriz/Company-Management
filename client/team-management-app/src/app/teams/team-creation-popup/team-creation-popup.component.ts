@@ -14,6 +14,7 @@ export class TeamCreationPopupComponent implements OnInit{
     @Output() close = new EventEmitter<void>(); //This is how we emit a (close) event to the parent.
     teamMembers: FullUserDto[];
     selectedMembers: FullUserDto[] = [];
+    errorMessage: string | undefined;
 
     constructor(private formBuilder: FormBuilder, private backendService: BackendService) {}
 
@@ -37,10 +38,14 @@ export class TeamCreationPopupComponent implements OnInit{
         users: this.selectedMembers,
       }
       
-      await this.backendService.createTeam(newTeamDto); //This will create a new team in the database, and then update our list of teams
+      const result = await this.backendService.createTeam(newTeamDto); //This will create a new team in the database, and then update our list of teams
       //This popup should wait for the API to say it saved the new team (or display an error otherwise)
 
+      if(result.success) {
       this.close.emit(); //Emit a close event to wipe away the popup
+      } else {
+        this.errorMessage = result.error;
+      }
     }
   
     closeEvent() { //For when the popup is simply closed (team creation canceled), emit a close event to make the popup dissapear in the parent component

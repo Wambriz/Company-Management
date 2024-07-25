@@ -1,10 +1,10 @@
 package com.teamblue.Management_App.controllers.advice;
 
 import com.teamblue.Management_App.dtos.ErrorDto;
+import com.teamblue.Management_App.exceptions.BadRequestException;
 import com.teamblue.Management_App.exceptions.NotAuthorizedException;
 import com.teamblue.Management_App.exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
