@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { FullUserDto, ProjectDto, TeamDto } from '../models';
+import { RouteguardsService } from '../../routeguards.service';
 
 @Component({
   selector: 'app-team-projects',
@@ -16,10 +17,12 @@ export class TeamProjectsComponent implements OnInit{
   user: FullUserDto | null = null;
   isAdmin: boolean = false;
   
-  constructor(private backendService: BackendService){}
+  constructor(private backendService: BackendService, private routerGuardService: RouteguardsService){}
 
   async ngOnInit(): Promise<void> {
     //Verify whether current logged in user is admin or not.
+    //First, block direct routing to projects again
+    this.routerGuardService.blockProjectsNavigation()
     const userData = localStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData) as FullUserDto;
