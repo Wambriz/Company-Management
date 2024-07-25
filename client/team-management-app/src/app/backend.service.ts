@@ -10,7 +10,8 @@ import {
   TeamDto,
   TeamRequestDto,
   CreateAnnouncementDto,
-  ProjectRequestDto
+  ProjectRequestDto,
+  UserRequestDto
 } from './models';
 
 @Injectable({
@@ -72,6 +73,10 @@ export class BackendService {
     const id = selectedCompany.id;
     const url = this.backendUrl + `company/${id}/users`;
     return this.http.get<FullUserDto[]>(url);
+  }
+
+  createUser(user: UserRequestDto, id: number): Observable<any> {
+    return this.http.post(this.backendUrl + `company/${id}/user`, user);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -339,9 +344,22 @@ export class BackendService {
   addDummyTeam(newTeam: TeamDto): void {
     this.listOfDummyTeams.push(newTeam);
   }
-
-  getListOfDummyTeams(): TeamDto[] {
-    return this.listOfDummyTeams;
+  
+  async getListOfTeams(): Promise<TeamDto[]> { //As we are using promises, we must await them to get the actual value.
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/teams`; // Endpoint URL
+  
+    try { //Try/catch block since we are now awaiting on promises.
+      const teams: TeamDto[] = await this.http.get<TeamDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [TeamDto]
+      console.log("Teams fetched from backend:" + JSON.stringify(teams));
+      return teams; //Return the fetched [TeamDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
+      return [];
+    }
   }
   // Devin test block
   //
@@ -457,24 +475,39 @@ export class BackendService {
   //   }
   // }
 
-  getActiveMembers(): FullUserDto[] {
-    //Later, this method should accept a company ID when making request to backend for active members of a company
-    return this.company2TeamMembers;
+  async getActiveMembers(): Promise<FullUserDto[]> { //As we are using promises, we must await them to get the actual value.
+    //Fetch all of the current company's users
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/users`; // Endpoint URL
+  
+    try { //Try/catch block since we are now awaiting on promises.
+      const teams: FullUserDto[] = await this.http.get<FullUserDto[]>(url).toPromise() || []; // Send get request to the endpoint and await the promise to get [FullUserDto]
+      return teams; //Return the fetched [FullUserDto] we awaited for
+    } catch (error) {
+      console.error('Error fetching teams:', error);
+      return [];
+    }
   }
 
-  createTeam(newTeamRequestDto: TeamRequestDto): void {
-    //Here we would communicate with out endpoint, save our new team, and then
-    //Make another call to fetch a list of teams.
+  async createTeam(newTeamRequestDto: TeamRequestDto): Promise<void> {
+    //This method will send a TeamRequestDto with the company ID path variable.
+    
+    const selectedCompany: CompanyDto = JSON.parse(localStorage.getItem('selectedCompany')!); // Get Current CompanyDto
+    const companyId = selectedCompany.id; // Get current company ID
+  
+    // Create and use URL
+    const url = this.backendUrl + `company/${companyId}/team`; // Endpoint URL
 
-    //For now, pretend to do that by manually creating a new TeamDto
-    const newTeamDto: TeamDto = {
-      id: 999,
-      name: newTeamRequestDto.name,
-      description: newTeamRequestDto.description,
-      users: newTeamRequestDto.users,
-    };
-
-    this.addDummyTeam(newTeamDto); //Adding our TeamDto response from the database to our list of teams
+    try { //Try/catch block since we are now awaiting on promises.
+      //Send POST request to id/team endpoint, attaching newTeamRequestDto as RequestBody.
+      await this.http.post<TeamDto>(url, newTeamRequestDto).toPromise(); //Await this promise so that we know the operation completes and our DB is updated
+    } catch (error) {
+      console.error('Error posting team:', error);
+    }
+    // Nothing else to return, because now getTeams() needs to be ran again where needed
   }
 
   createProject(newProjectRequestDto: ProjectRequestDto): void {

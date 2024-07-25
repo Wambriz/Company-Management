@@ -15,20 +15,18 @@ export class TeamCreationPopupComponent implements OnInit{
     teamMembers: FullUserDto[];
     selectedMembers: FullUserDto[] = [];
 
-    constructor(private formBuilder: FormBuilder, private backendService: BackendService) {
+    constructor(private formBuilder: FormBuilder, private backendService: BackendService) {}
+
+    async ngOnInit(): Promise<void> {
       this.teamForm = this.formBuilder.group({ //Building a new form grouo
         name: [''], //Making individual FormControls that make up this FormGroup
         description: [''],
         selectedUser: ['']
       })
-      this.teamMembers = backendService.getActiveMembers();
+      this.teamMembers = await this.backendService.getActiveMembers();
     }
 
-    ngOnInit(): void {
-
-    }
-
-    onSubmit() {
+    async onSubmit() {
       //Process data entered here into a DTO, then send to backend.
       const formData = this.teamForm.value; //Capture the formgroup data
 
@@ -39,7 +37,7 @@ export class TeamCreationPopupComponent implements OnInit{
         users: this.selectedMembers,
       }
       
-      this.backendService.createTeam(newTeamDto); //This will create a new team in the database, and then update our list of teams
+      await this.backendService.createTeam(newTeamDto); //This will create a new team in the database, and then update our list of teams
       //This popup should wait for the API to say it saved the new team (or display an error otherwise)
 
       this.close.emit(); //Emit a close event to wipe away the popup

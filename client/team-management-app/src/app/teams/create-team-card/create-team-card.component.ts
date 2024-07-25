@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-create-team-card',
@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class CreateTeamCardComponent {
 showCreateTeamPopup: Boolean = false; //Do not show popup by default
+@Output() close = new EventEmitter<void>(); //This is how we emit a (close) event to the parent.
 
 
 //Controls for showing/dissapearing the popup
@@ -15,5 +16,7 @@ openPopup() {
 }
 closePopup() {
   this.showCreateTeamPopup = false;
+  //Emit close event to notify parent (teams)
+  this.close.emit();
 }
 }
