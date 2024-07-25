@@ -179,13 +179,16 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void createUserByCompanyId(long id, UserRequestDto userRequestDto) {
-        System.out.println("A call was made to the Service");
-        System.out.println("userRequestDto: " + userRequestDto);
         User newUser = userMapper.UserRequestDtoToEntity(userRequestDto);
-        System.out.println("newUser: " + newUser);
         newUser.setCompanies(List.of(companyRepository.findById(id)));
         newUser.setStatus("JOINED");
         newUser.setActive(true);
+        for (User user: userRepository.findUsersByCompanyId(id)) {
+            System.out.println("username: " + user.getCredentials().getUsername());
+            if (user.getCredentials().getUsername().equals(newUser.getCredentials().getUsername())) {
+                throw new BadRequestException("User already exists.");
+            }
+        }
         userRepository.saveAndFlush(newUser);
     }
 

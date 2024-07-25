@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
     	
     	User userToCreate = userMapper.requestDtoToEntity(userRequestDto);
 		User userExists = userRepository.findByCredentialsUsername(userToCreate.getCredentials().getUsername());
+		System.out.println("userExists: " + userExists);
 		if(userExists != null && !userExists.getActive()){
 			throw new BadRequestException("User already exists.");
 		}

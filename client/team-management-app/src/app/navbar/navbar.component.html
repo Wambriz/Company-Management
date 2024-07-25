@@ -7,13 +7,13 @@
     <a routerLink="/home-announcements">
         Home
     </a>
-    <a *ngIf="isAdmin" routerLink="/select-company">
+    <a *ngIf="isAdmin" (click)="loadCompanyPage()">
         Company
     </a>
     <a routerLink="/teams">
         Teams
     </a>
-    <a *ngIf="isAdmin" routerLink="/users-reg">
+    <a *ngIf="isAdmin" (click)="loadUsersPage()">
         Users
     </a>
     <a routerLink="/login" (click) = "logout()">

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamDto } from '../../models';
 import { BackendService } from '../../backend.service';
+import { RouteguardsService } from '../../../routeguards.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-team-card',
@@ -13,7 +15,7 @@ projectCounts: {[teamId: string]: number} = {} //New map of team id - project co
 
 //INFO: TeamDto comes with id, name, description, and a list of users[], which are a list of [BasicUserDto]
 //INFO: BasicUserDto comes with id, ProfileDto{}, isAdmin, active, and status
-constructor(private backendService: BackendService) {
+constructor(private backendService: BackendService, private routerGuardService: RouteguardsService, private router: Router) {
 }
 
 async ngOnInit(): Promise<void> { //OnInit actions here
@@ -29,5 +31,12 @@ async ngOnInit(): Promise<void> { //OnInit actions here
 
 setCurrentTeam(team: TeamDto) {//When this is called, the currentTeam variable in our service is updated (for our projects elements that come right after)
   this.backendService.setCurrentTeam(team)  //This is our method of passing the current team to our next page, our team-projects component
+}
+
+//Sets the current team, sets project navigation flag to true, then routes with router.navigate
+loadProjects(team: TeamDto) {
+  this.setCurrentTeam(team);
+  this.routerGuardService.allowProjectsNavigation();
+  this.router.navigate(['/projects']);
 }
 }
