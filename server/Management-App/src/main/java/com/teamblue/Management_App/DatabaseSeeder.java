@@ -64,7 +64,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         user1.setProfile(p1);
         user1.setActive(true);
         user1.setIsAdmin(false);
-        user1.setStatus("active");
+        user1.setStatus("JOINED"); // Changed status from "active"
         user1.setCompanies(List.of(company1));
 
         User user2 = new User();
@@ -80,7 +80,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         user2.setProfile(p2);
         user2.setActive(true);
         user2.setIsAdmin(true);
-        user2.setStatus("active");
+        user2.setStatus("JOINED"); // Changed status from "active"
         user2.setCompanies(List.of(company1, company2));
 
         userRepository.saveAll(List.of(user1, user2));
