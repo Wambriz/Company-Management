@@ -8,6 +8,7 @@ import com.teamblue.Management_App.dtos.FullUserDto;
 import com.teamblue.Management_App.dtos.UserRequestDto;
 import com.teamblue.Management_App.entities.Credentials;
 import com.teamblue.Management_App.services.UserService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/users")
+@NoArgsConstructor // TODO Remove
 public class UserController {
 
     @Autowired
