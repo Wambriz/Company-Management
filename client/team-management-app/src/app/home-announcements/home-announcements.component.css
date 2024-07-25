@@ -3,6 +3,7 @@
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    color: #1BA098;
   }
   
   .announcements {
@@ -12,11 +13,46 @@
   
   .announcements ul {
     list-style: none;
-    padding: 0;
+    color: white;
+  }
+
+  .announcements-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .announcements-name{
+    font-size: 1.2rem;
+
+  }
+
+  .announcements-date{
+    font-size: 1rem;
+    color: #888;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+
+  .announcements-text{
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 0;
   }
   
   .announcements li {
     margin-bottom: 10px;
+    background-color: #0B2D45;
+    padding: 10px;
+    border-radius: 12px;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-top: 4%;
   }
 
   .popup {
