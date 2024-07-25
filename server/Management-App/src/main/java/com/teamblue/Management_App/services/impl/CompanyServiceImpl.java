@@ -4,12 +4,16 @@ import com.teamblue.Management_App.dtos.AnnouncementDto;
 import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
 import com.teamblue.Management_App.dtos.CompanyDto;
 import com.teamblue.Management_App.dtos.FullUserDto;
+import com.teamblue.Management_App.dtos.ProjectDto;
 import com.teamblue.Management_App.entities.Announcements;
 import com.teamblue.Management_App.entities.Company;
+import com.teamblue.Management_App.entities.Team;
 import com.teamblue.Management_App.entities.User;
 import com.teamblue.Management_App.exception.BadRequestException;
 import com.teamblue.Management_App.mappers.AnnouncementMapper;
 import com.teamblue.Management_App.mappers.CompanyMapper;
+import com.teamblue.Management_App.mappers.ProjectMapper;
+import com.teamblue.Management_App.mappers.TeamMapper;
 import com.teamblue.Management_App.mappers.UserMapper;
 import com.teamblue.Management_App.repositories.AnnouncementsRepository;
 import com.teamblue.Management_App.repositories.CompanyRepository;
@@ -33,6 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final AnnouncementMapper announcementMapper;
     private final AnnouncementsRepository announcementRepository;
     private final UserRepository userRepository;
+    private final ProjectMapper projectMapper;
 
     @Override
     public List<FullUserDto> getActiveUsersByCompanyId(Long companyId) {
@@ -62,6 +67,13 @@ public class CompanyServiceImpl implements CompanyService {
     public List<FullUserDto> getUsersByCompanyId(long id) {
         System.out.println("Made a call to CompanyServiceImpl");
         return userMapper.entitiesToFullUserDtos(userRepository.findUsersByCompanyId(id));
+    }
+    
+    @Override
+    public CompanyDto getCompanyById(Long id) {
+    	Company company = companyRepository.findById(id)
+    			.orElseThrow(() -> new IllegalArgumentException("Company not found"));
+    	return companyMapper.entityToDto(company) ;
     }
   
   
@@ -110,6 +122,21 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.saveAndFlush(company);
 
         return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
+    }
+    
+    public List<ProjectDto> getCompanyTeamProjects(long comp_id, long team_id){
+    	Company company = companyRepository.findById(comp_id)
+                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        if (!company.getActive()) {
+            throw new BadRequestException("Company is not active");
+        }
+        List<Team> teams = company.getTeams().stream()
+        		.filter(team ->  team.getId() == team_id)
+        		.toList();
+        
+        System.out.println(teams);
+        
+    	return null;
     }
 }
 

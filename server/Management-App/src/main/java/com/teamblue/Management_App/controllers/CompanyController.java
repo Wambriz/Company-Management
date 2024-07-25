@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.teamblue.Management_App.dtos.FullUserDto;
+import com.teamblue.Management_App.dtos.ProjectDto;
+
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +29,11 @@ public class CompanyController {
     	return companyService.getAllCompanies();
     }
     
+    @GetMapping("/{id}")
+    public CompanyDto getCompanyById(@PathVariable Long id){
+    	return companyService.getCompanyById(id);
+    }
+    
     @GetMapping("/{id}/announcements")
     public List<AnnouncementDto> getAllCompanyAnnouncements(@PathVariable Long id){
     	return companyService.getAllCompanyAnnouncements(id);
@@ -41,7 +48,14 @@ public class CompanyController {
 
     @GetMapping("/{id}/users")
     public List<FullUserDto> getUsersByCompanyId(@PathVariable long id) {
-        System.out.println("Made a call to CompanyController");
         return companyService.getUsersByCompanyId(id);
     }
+    
+    @GetMapping("/{comp_id}/teams/{team_id}/projects")
+    public List<ProjectDto> getCompanyTeamProjects(@PathVariable long comp_id, @PathVariable long team_id){
+    	return companyService.getCompanyTeamProjects(comp_id, team_id);
+    }
+
+    	
+    
 }
