@@ -45,8 +45,8 @@ public class CompanyController {
     
     @PostMapping("/{id}/announcement")
     @ResponseStatus(HttpStatus.CREATED)
-    public AnnouncementDto createAnnouncement(@PathVariable Long id, @RequestBody AnnouncementRequestDto announcementRequestDto) {
-    	return companyService.createAnnouncement(id, announcementRequestDto);
+    public void createAnnouncement(@PathVariable Long id, @RequestBody AnnouncementRequestDto announcementRequestDto) {
+    	companyService.createAnnouncement(id, announcementRequestDto);
     }
 
 

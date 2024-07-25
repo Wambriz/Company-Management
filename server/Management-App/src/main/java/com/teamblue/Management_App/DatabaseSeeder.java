@@ -149,7 +149,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         announcement1.setMessage("Welcome to the company!");
         announcement1.setCompany(company1);
         announcement1.setAuthor(author1);
-        announcement1.setIsDeleted(true);
+        announcement1.setIsDeleted(false);
 
         Announcements announcement2 = new Announcements();
         announcement2.setTitle("Meeting");

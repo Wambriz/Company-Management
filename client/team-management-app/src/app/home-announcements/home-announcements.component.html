@@ -17,5 +17,5 @@
 </div>
 
 <div class="popup" *ngIf="showForm"> <!--Popup that appears when showPopup is true, like when above button is clicked-->
-  <app-announcement-form (close)="closeForm()"></app-announcement-form> <!--Close popup when this component sends a (close) event-->
+  <app-announcement-form (close)="closeForm()" (announcementCreated)="onAnnouncementCreated()"></app-announcement-form> <!--Close popup when this component sends a (close) event-->
 </div>
