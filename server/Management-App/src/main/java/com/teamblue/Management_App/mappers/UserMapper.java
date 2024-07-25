@@ -2,6 +2,7 @@ package com.teamblue.Management_App.mappers;
 
 import java.util.List;
 
+import com.teamblue.Management_App.dtos.BasicUserDto;
 import com.teamblue.Management_App.dtos.FullUserDto;
 import com.teamblue.Management_App.dtos.UserRequestDto;
 import com.teamblue.Management_App.entities.User;
@@ -9,16 +10,23 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = {ProfileMapper.class, CredentialsMapper.class, CompanyMapper.class})
-
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-//	@Mapping(target="username", source="credentials.username")
+
     FullUserDto entityToDto(User entity);
 
-    List<FullUserDto> entitiesToDtos(List<User> entities);
-	
-	User FullUserDtoToEntity(FullUserDto fullUserDto);
+	User requestDtoToEntity(UserRequestDto userRequestDto);
+
+	List<BasicUserDto> entitiesToBasicUserDtos(List<User> entities);
+
+	User fullUserDtoToEntity(FullUserDto fullUserDto);
+
+    BasicUserDto entityToBasicDto(User user);
+    
+    User basicUserDtoToEntity(BasicUserDto basicUserDto);
+
+    List<FullUserDto> entitiesToFullUserDtos(List<User> entities);
 
     User UserRequestDtoToEntity(UserRequestDto userRequestDto);
 }
