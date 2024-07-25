@@ -61,7 +61,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<FullUserDto> getUsersByCompanyId(long id) {
         System.out.println("Made a call to CompanyServiceImpl");
-        return userMapper.entitiesToDtos(userRepository.findUsersByCompanyId(id));
+        return userMapper.entitiesToFullUserDtos(userRepository.findUsersByCompanyId(id));
     }
   
   

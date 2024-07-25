@@ -19,17 +19,15 @@ public interface UserMapper {
 
 	User requestDtoToEntity(UserRequestDto userRequestDto);
 
-	List<BasicUserDto> entitiesToDtos(List<User> all);
+	List<BasicUserDto> entitiesToBasicUserDtos(List<User> entities);
 
-    FullUserDto entityToFullUserDto(User user);
 	User fullUSerDtoToEntity(FullUserDto fullUserDto);
 
     BasicUserDto entityToBasicDto(User user);
     
     User basicUserDtoToEntity(BasicUserDto basicUserDto);
 
-
-    List<FullUserDto> entitiesToDtos(List<User> entities);
+    List<FullUserDto> entitiesToFullUserDtos(List<User> entities);
 	
 	User RequestDtoToEntity(FullUserDto fullUserDto);
 

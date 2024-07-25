@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
 	public List<BasicUserDto> getAllUsers() {
-		return userMapper.entitiesToDtos(userRepository.findAll());
+		return userMapper.entitiesToBasicUserDtos(userRepository.findAll());
 	}
     
     @Override
