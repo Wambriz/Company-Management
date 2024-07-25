@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
-import { ProjectDto, TeamDto } from '../models';
+import { FullUserDto, ProjectDto, TeamDto } from '../models';
 
 @Component({
   selector: 'app-team-projects',
@@ -13,11 +13,19 @@ export class TeamProjectsComponent implements OnInit{
   showCreateProjectPopup: boolean = false;
   showEditProjectPopup: boolean = false;
   projectData: ProjectDto; //We will pass this variable down to the edit project child popup
-
+  user: FullUserDto | null = null;
+  isAdmin: boolean = false;
   
   constructor(private backendService: BackendService){}
 
   async ngOnInit(): Promise<void> {
+    //Verify whether current logged in user is admin or not.
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData) as FullUserDto;
+      this.isAdmin = this.user.isAdmin;
+    }
+  
     this.currentTeam = this.backendService.getCurrentTeam(); //Fetch the current team we are observing from our service
     this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch [ProjectDto] with current TeamDto to display from our service(and therefore our backend)
   }

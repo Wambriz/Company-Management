@@ -27,7 +27,7 @@ export class ProjectEditPopupComponent implements OnInit{
     this.close.emit();
   }
 
-  onSubmit() {
+  async onSubmit() {
     // Send a new ProjectDto to our service on Submit, where the backend will update the DB with the same DTO (using ID)
     const updatedProject: ProjectDto = {
       id: this.projectData.id,
@@ -38,7 +38,7 @@ export class ProjectEditPopupComponent implements OnInit{
     }
 
     //updateProject() takes a ProjectDto and sends it to the backend (Then reflecting those changes is done at the parent level, not here)
-    this.backendService.updateProject(updatedProject);
+    await this.backendService.updateProject(updatedProject);
     this.close.emit(); //Emit a close event to wipe away the popup
   }
 

@@ -17,4 +17,9 @@ export class NavbarComponent implements OnInit {
       this.isAdmin = this.user.isAdmin;
     }
   }
+
+  logout() {
+    //clear local storage on logout
+    localStorage.clear();
+  }
 }
