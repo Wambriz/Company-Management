@@ -12,7 +12,7 @@ public interface CompanyService {
     List<FullUserDto> getUsersByCompanyId(long id);
 
     void createUserByCompanyId(long id, UserRequestDto userRequestDto);
-
+    
 	List<TeamDto> getTeamsByCompanyId(long id); //New method to grab a teams of a company
 
     TeamDto createTeam(long id, TeamRequestDto newTeam);

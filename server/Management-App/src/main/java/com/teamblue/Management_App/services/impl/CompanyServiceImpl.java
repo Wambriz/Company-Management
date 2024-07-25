@@ -7,7 +7,6 @@ import com.teamblue.Management_App.dtos.TeamDto;
 import com.teamblue.Management_App.dtos.TeamRequestDto;
 import com.teamblue.Management_App.entities.Company;
 import com.teamblue.Management_App.entities.Team;
-import com.teamblue.Management_App.entities.User;
 import com.teamblue.Management_App.mappers.TeamMapper;
 import com.teamblue.Management_App.mappers.UserMapper;
 import com.teamblue.Management_App.repositories.CompanyRepository;
@@ -24,7 +23,6 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
 
     private final UserRepository userRepository;
-    private final CompanyRepository companyRepository;
     private final UserMapper userMapper;
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
@@ -59,7 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
         Team newTeamEntity = teamMapper.RequestDtoToEntity(newTeam);
 
         //Second: Flesh out Entity by assigning it a Company entity
-        Company teamCompany = companyRepository.findById(companyId).get(); //Get the company via the ID
+        Company teamCompany = companyRepository.findById(companyId); //Get the company via the ID
         newTeamEntity.setCompany(teamCompany); //Set the company to this entity to establish the relationship
 
         //Third, Save entity into the DB (relationships established with Users should also be reflected)
