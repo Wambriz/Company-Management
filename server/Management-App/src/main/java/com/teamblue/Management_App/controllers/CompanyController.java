@@ -3,13 +3,12 @@ package com.teamblue.Management_App.controllers;
 
 import java.util.List;
 
-import com.teamblue.Management_App.dtos.AnnouncementDto;
-import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
-import com.teamblue.Management_App.dtos.CompanyDto;
+import com.teamblue.Management_App.dtos.*;
 import com.teamblue.Management_App.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import com.teamblue.Management_App.dtos.FullUserDto;
 import com.teamblue.Management_App.dtos.ProjectDto;
 
@@ -50,12 +49,15 @@ public class CompanyController {
     public List<FullUserDto> getUsersByCompanyId(@PathVariable long id) {
         return companyService.getUsersByCompanyId(id);
     }
-    
+
     @GetMapping("/{comp_id}/teams/{team_id}/projects")
     public List<ProjectDto> getCompanyTeamProjects(@PathVariable long comp_id, @PathVariable long team_id){
     	return companyService.getCompanyTeamProjects(comp_id, team_id);
     }
 
-    	
-    
+    @PatchMapping("/{companyId}/teams/{teamId}/project")
+    public ProjectDto updateProject(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
+        return companyService.updateProject(companyId, teamId, projectDto);
+    }
+
 }

@@ -1,12 +1,6 @@
-
 package com.teamblue.Management_App.services;
 
-import com.teamblue.Management_App.dtos.AnnouncementDto;
-import com.teamblue.Management_App.dtos.AnnouncementRequestDto;
-import com.teamblue.Management_App.dtos.CompanyDto;
-import com.teamblue.Management_App.dtos.FullUserDto;
-import com.teamblue.Management_App.dtos.ProjectDto;
-
+import com.teamblue.Management_App.dtos.*;
 import java.util.List;
 
 public interface CompanyService {
@@ -17,5 +11,8 @@ public interface CompanyService {
 	List<FullUserDto> getUsersByCompanyId(long id);
 	List<ProjectDto> getCompanyTeamProjects(long comp_id, long team_id);
 	CompanyDto getCompanyById(Long id);
+
+  ProjectDto updateProject(Long companyId, Long teamId, ProjectDto projectDto);
+
 }
 
