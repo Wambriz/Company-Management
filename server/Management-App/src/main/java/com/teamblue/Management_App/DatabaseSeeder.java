@@ -306,7 +306,71 @@ public class DatabaseSeeder implements CommandLineRunner {
         user15.setStatus("JOINED"); // Changed status from "active"
         user15.setCompanies(List.of(company5));
 
-        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15));
+        User user16 = new User();
+        Credentials creds16 = new Credentials();
+        creds16.setUsername("random@improbability.com");
+        creds16.setPassword("password123");
+        user16.setCredentials(creds16);
+        Profile p16 = new Profile();
+        p16.setFirstname("Random");
+        p16.setLastname("Dent");
+        p16.setEmail("random@improbability.com");
+        p16.setPhone("931-555-0104");
+        user16.setProfile(p16);
+        user16.setActive(true);
+        user16.setIsAdmin(true);
+        user16.setStatus("JOINED"); // Changed status from "active"
+        user16.setCompanies(List.of(company1, company2));
+
+        User user17 = new User();
+        Credentials creds17 = new Credentials();
+        creds17.setUsername("fenchurch@improbability.com");
+        creds17.setPassword("password123");
+        user17.setCredentials(creds17);
+        Profile p17 = new Profile();
+        p17.setFirstname("Fenchurch");
+        p17.setLastname("Unknown");
+        p17.setEmail("fenchurch@improbability.com");
+        p17.setPhone("931-555-0105");
+        user17.setProfile(p17);
+        user17.setActive(true);
+        user17.setIsAdmin(false);
+        user17.setStatus("JOINED"); // Changed status from "active"
+        user17.setCompanies(List.of(company1));
+
+        User user18 = new User();
+        Credentials creds18 = new Credentials();
+        creds18.setUsername("zanatrap@improbability.com");
+        creds18.setPassword("password123");
+        user18.setCredentials(creds18);
+        Profile p18 = new Profile();
+        p18.setFirstname("Zanatrap");
+        p18.setLastname("Doe");
+        p18.setEmail("zanatrap@improbability.com");
+        p18.setPhone("555-0106");
+        user18.setProfile(p18);
+        user18.setActive(false);
+        user18.setIsAdmin(false);
+        user18.setStatus("PENDING"); // Changed status from "active"
+        user18.setCompanies(List.of(company1));
+
+        User user19 = new User();
+        Credentials creds19 = new Credentials();
+        creds19.setUsername("hoopyfrood@improbability.com");
+        creds19.setPassword("password123");
+        user19.setCredentials(creds19);
+        Profile p19 = new Profile();
+        p19.setFirstname("Hoopy");
+        p19.setLastname("Frood");
+        p19.setEmail("hoopyfrood@improbability.com");
+        p19.setPhone("555-0107");
+        user19.setProfile(p19);
+        user19.setActive(false);
+        user19.setIsAdmin(false);
+        user19.setStatus("JOINED"); // Changed status from "active"
+        user19.setCompanies(List.of(company1));
+
+        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15, user16, user17, user18, user19));
     }
 
     private void seedTeams() {
@@ -331,24 +395,26 @@ public class DatabaseSeeder implements CommandLineRunner {
         User user13 = userRepository.findByCredentialsUsername("agrajag@toweltech.com");
         User user14 = userRepository.findByCredentialsUsername("vogon@toweltech.com");
         User user15 = userRepository.findByCredentialsUsername("prostetnic@toweltech.com");
+        User user16 = userRepository.findByCredentialsUsername("random@improbability.com");
+        User user17 = userRepository.findByCredentialsUsername("fenchurch@improbability.com");
 
         Team team1 = new Team();
         team1.setName("Infinite Thinkers");
         team1.setDescription("A team dedicated to brainstorming improbably brilliant ideas.");
         team1.setCompany(company1);
-        team1.setUsers(List.of(user1, user2, user3)); // Associate users with team
+        team1.setUsers(List.of(user1, user2, user3, user16, user17)); // Associate users with team
 
         Team team2 = new Team();
         team2.setName("Quantum Leapers");
         team2.setDescription("Focusing on experimental projects and quantum computing.");
         team2.setCompany(company1);
-        team2.setUsers(List.of(user1, user3)); // Associate users with team
+        team2.setUsers(List.of(user1, user3, user16)); // Associate users with team
 
         Team team3 = new Team();
         team3.setName("Galactic Mixologists");
         team3.setDescription("Experts in creating out-of-this-world solutions to cosmic problems.");
         team3.setCompany(company2);
-        team3.setUsers(List.of(user4, user5, user6)); // Associate users with team
+        team3.setUsers(List.of(user4, user5, user6, user16)); // Associate users with team
 
         Team team4 = new Team();
         team4.setName("Reality Benders");
@@ -392,7 +458,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         team10.setCompany(company5);
         team10.setUsers(List.of(user14, user15)); // Associate users with team
 
-        teamRepository.saveAll(List.of(team1, team2, team3, team4, team5, team6, team7, team8, team9, team10));
+        Team team11 = new Team();
+        team11.setName("Probability Pioneers");
+        team11.setDescription(" Exploring new frontiers in probability manipulation and improbable event generation.");
+        team11.setCompany(company1);
+        team11.setUsers(List.of(user16, user17)); // Associate users with team
+
+        teamRepository.saveAll(List.of(team1, team2, team3, team4, team5, team6, team7, team8, team9, team10, team11));
 
         // Update users to include the teams
         user1.setTeams(List.of(team1, team2));
@@ -410,7 +482,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         user13.setTeams(List.of(team9));
         user14.setTeams(List.of(team9, team10));
         user15.setTeams(List.of(team9, team10));
-        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
+        user16.setTeams(List.of(team1, team2, team3, team11));
+        user17.setTeams(List.of(team1, team11));
+        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15, user16, user17));
     }
 
     private void seedProjects() {
@@ -560,6 +634,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         User author3 = userRepository.findByCredentialsUsername("slarti@hitchco.com");
         User author4 = userRepository.findByCredentialsUsername("deepthought@babelcom.com");
         User author5 = userRepository.findByCredentialsUsername("agrajag@toweltech.com");
+        User author6 = userRepository.findByCredentialsUsername("random@improbability.com");
 
         Announcements announcement1 = new Announcements();
         announcement1.setTitle("New Improbability Drive Settings");
@@ -631,7 +706,28 @@ public class DatabaseSeeder implements CommandLineRunner {
         announcement10.setAuthor(author5);
         announcement10.setIsDeleted(false);
 
-        announcementsRepository.saveAll(List.of(announcement1, announcement2, announcement3, announcement4, announcement5, announcement6, announcement7, announcement8, announcement9, announcement10));
+        Announcements announcement11 = new Announcements();
+        announcement11.setTitle("Infinite Probability Calculator Update");
+        announcement11.setMessage("Exciting news! We've just upgraded our Infinite Probability Calculator. Now, calculating the likelihood of improbable events is easier and more accurate than ever. Let’s push the boundaries of what’s possible!");
+        announcement11.setCompany(company1);
+        announcement11.setAuthor(author6);
+        announcement11.setIsDeleted(false);
+
+        Announcements announcement12 = new Announcements();
+        announcement12.setTitle("Intergalactic Improbability Summit");
+        announcement12.setMessage("Mark your calendars for the upcoming Intergalactic Improbability Summit. We’ll be discussing the latest advancements in improbability science and sharing groundbreaking ideas. Don’t forget your towels!");
+        announcement12.setCompany(company1);
+        announcement12.setAuthor(author6);
+        announcement12.setIsDeleted(false);
+
+        Announcements announcement13 = new Announcements();
+        announcement13.setTitle("Pan-Galactic Sustainability Initiative");
+        announcement13.setMessage("We're launching a new initiative focused on sustainable energy solutions across the galaxy. Join us in making the universe a greener place. Your ideas and enthusiasm are key—bring them to the next team meeting!");
+        announcement13.setCompany(company2);
+        announcement13.setAuthor(author6);
+        announcement13.setIsDeleted(false);
+
+        announcementsRepository.saveAll(List.of(announcement1, announcement11, announcement2, announcement3, announcement13, announcement4, announcement5, announcement6, announcement7, announcement8, announcement9, announcement10, announcement12));
     }
 }
 

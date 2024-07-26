@@ -17,7 +17,7 @@
                 <tr *ngFor="let user of users">
                     <td>{{ user.profile.firstname }} {{ user.profile.lastname }}</td>
                     <td>{{ user.profile.email }}</td>
-                    <td>{{ user.active }}</td>
+                    <td class="color-red" [ngClass]="{'color-green':user.active}">{{ user.active }}</td>
                     <td class="color-red" [ngClass]="{'color-green':user.isAdmin}">{{ user.isAdmin }}</td>
                     <td>{{ user.status }}</td>
                 </tr>
