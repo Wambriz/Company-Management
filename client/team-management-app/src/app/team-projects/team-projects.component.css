@@ -12,7 +12,7 @@
 }
 
 .popup .popup-content {
-  background-color: white;
+  background-color: #0B2D45;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -28,6 +28,11 @@
   text-align: center;
   color: #1BA098; 
 
+}
+
+input{
+  text-decoration: none;
+  color: #DEB992;
 }
 
 .team-projects-container {
@@ -107,6 +112,10 @@ h1 {
   padding: 6px 12px;
   border-radius: 10px;
   border: none;
+}
+
+.project-button:hover{
+  background-color: #a1876b;
 }
 
 .color-red {
