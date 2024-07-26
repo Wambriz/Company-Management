@@ -25,7 +25,7 @@ export class ProjectCreationPopupComponent implements OnInit{
     this.close.emit();
   }
 
-  onSubmit() {
+  async onSubmit() { 
     const newProjectDto: ProjectRequestDto = { //Create a new ProjectRequestDto
       name: this.projectForm.value["name"],
       description: this.projectForm.value["description"],
@@ -34,7 +34,7 @@ export class ProjectCreationPopupComponent implements OnInit{
     }
 
     //Send ProjectRequestDto to our service/endpoint
-    this.backendService.createProject(newProjectDto)
+    await this.backendService.createProject(newProjectDto); //Await on result before continuing on
     this.close.emit(); //Emit a close event to wipe away the popup
   }
   

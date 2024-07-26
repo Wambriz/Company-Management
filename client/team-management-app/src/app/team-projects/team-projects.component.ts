@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
-import { ProjectDto, TeamDto } from '../models';
+import { FullUserDto, ProjectDto, TeamDto } from '../models';
+import { RouteguardsService } from '../../routeguards.service';
 
 @Component({
   selector: 'app-team-projects',
@@ -13,11 +14,21 @@ export class TeamProjectsComponent implements OnInit{
   showCreateProjectPopup: boolean = false;
   showEditProjectPopup: boolean = false;
   projectData: ProjectDto; //We will pass this variable down to the edit project child popup
-
+  user: FullUserDto | null = null;
+  isAdmin: boolean = false;
   
-  constructor(private backendService: BackendService){}
+  constructor(private backendService: BackendService, private routerGuardService: RouteguardsService){}
 
   async ngOnInit(): Promise<void> {
+    //Verify whether current logged in user is admin or not.
+    //First, block direct routing to projects again
+    this.routerGuardService.blockProjectsNavigation()
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user = JSON.parse(userData) as FullUserDto;
+      this.isAdmin = this.user.isAdmin;
+    }
+  
     this.currentTeam = this.backendService.getCurrentTeam(); //Fetch the current team we are observing from our service
     this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch [ProjectDto] with current TeamDto to display from our service(and therefore our backend)
   }
@@ -26,8 +37,8 @@ export class TeamProjectsComponent implements OnInit{
     this.showCreateProjectPopup = true;
   }
 
-  closeProjectPopup() {
-    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
+  async closeProjectPopup() {
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch projects from DB
     this.showCreateProjectPopup = false;
   }
 
@@ -36,8 +47,8 @@ export class TeamProjectsComponent implements OnInit{
     this.showEditProjectPopup = true;
   }
 
-  closeEditProjectPopup() {
-    this.updateTeamProjectsFromDatabase() //Once popup is closed, re-fetch list of projects from DB (in case of update)
+  async closeEditProjectPopup() {
+    this.teamProjects = await this.backendService.getTeamProjects(this.currentTeam); //Fetch projects from DB
     this.showEditProjectPopup = false;
 
   }

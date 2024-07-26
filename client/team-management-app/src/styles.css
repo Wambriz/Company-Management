@@ -3,7 +3,7 @@
 html, body { height: 100%; }
 body { 
     margin: 0; 
-    font-family: Mulish; 
+    font-family: Mulish, Inter; 
     font-weight: lighter;
     background-color: #051622;
 }

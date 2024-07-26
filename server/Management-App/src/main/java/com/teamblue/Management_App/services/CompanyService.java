@@ -10,7 +10,7 @@ import com.teamblue.Management_App.dtos.TeamRequestDto;
 
 public interface CompanyService {
     List<FullUserDto> getActiveUsersByCompanyId(Long companyId);
-	AnnouncementDto createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto);
+	void createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto);
 	List<AnnouncementDto> getAllCompanyAnnouncements(Long id);
 	List<CompanyDto> getAllCompanies();
     List<FullUserDto> getUsersByCompanyId(long id);

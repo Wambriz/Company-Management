@@ -1,10 +1,15 @@
 package com.teamblue.Management_App.services.impl;
 
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.teamblue.Management_App.dtos.*;
+import com.teamblue.Management_App.exceptions.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import com.teamblue.Management_App.entities.Announcements;
@@ -98,28 +103,34 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
-    public AnnouncementDto createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
-        // Find company by id
-        Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
-        // Create new announcement object
-        Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
-        announce.setCompany(company);
-        announce.setIsDeleted(false);
+    public void createAnnouncement(Long id, AnnouncementRequestDto announcementRequestDto) {
+        Company company = companyRepository.getReferenceById(id);
+        Announcements announcements = announcementMapper.dtoToEntity(announcementRequestDto);
+        announcements.setCompany(company);
+        announcements.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        announcementRepository.saveAndFlush(announcements);
 
-        // Set the author from the user repository
-        User author = userRepository.findById(announcementRequestDto.getAuthor().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
-        announce.setAuthor(author);
-
-        System.out.println("Announcement: " + announce);
-        // Update and Save Company
-        List<Announcements> companyAnnouncements = company.getAnnouncements();
-        companyAnnouncements.add(announce);
-        company.setAnnouncements(companyAnnouncements);
-        companyRepository.saveAndFlush(company);
-
-        return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
+//        // Find company by id
+//        Company company = companyRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+//        // Create new announcement object
+//        Announcements announce = announcementMapper.dtoToEntity(announcementRequestDto);
+//        announce.setCompany(company);
+//        announce.setIsDeleted(false);
+//
+//        // Set the author from the user repository
+//        User author = userRepository.findById(announcementRequestDto.getAuthor().getId())
+//                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
+//        announce.setAuthor(author);
+//
+//        System.out.println("Announcement: " + announce);
+//        // Update and Save Company
+//        List<Announcements> companyAnnouncements = company.getAnnouncements();
+//        companyAnnouncements.add(announce);
+//        company.setAnnouncements(companyAnnouncements);
+//        companyRepository.saveAndFlush(company);
+//
+//        return announcementMapper.entityToDto(announcementRepository.saveAndFlush(announce));
     }
     
     public List<ProjectDto> getCompanyTeamProjects(long comp_id, long team_id){
@@ -168,13 +179,16 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void createUserByCompanyId(long id, UserRequestDto userRequestDto) {
-        System.out.println("A call was made to the Service");
-        System.out.println("userRequestDto: " + userRequestDto);
         User newUser = userMapper.UserRequestDtoToEntity(userRequestDto);
-        System.out.println("newUser: " + newUser);
         newUser.setCompanies(List.of(companyRepository.findById(id)));
         newUser.setStatus("JOINED");
         newUser.setActive(true);
+        for (User user: userRepository.findUsersByCompanyId(id)) {
+            System.out.println("username: " + user.getCredentials().getUsername());
+            if (user.getCredentials().getUsername().equals(newUser.getCredentials().getUsername())) {
+                throw new BadRequestException("User already exists.");
+            }
+        }
         userRepository.saveAndFlush(newUser);
     }
 
@@ -192,6 +206,15 @@ public class CompanyServiceImpl implements CompanyService {
         //Second: Flesh out Entity by assigning it a Company entity
         Company teamCompany = companyRepository.findById(companyId); //Get the company via the ID
         newTeamEntity.setCompany(teamCompany); //Set the company to this entity to establish the relationship
+
+        List<String> teamNames = new ArrayList<>();
+        for (Team team: teamRepository.findTeamsByCompanyId(teamCompany.getId())) {
+            teamNames.add(team.getName());
+        }
+
+        if (teamNames.contains(newTeamEntity.getName())) {
+            throw new BadRequestException("Team name already used.");
+        }
 
         //Third, Save entity into the DB (relationships established with Users should also be reflected)
         Team savedTeam = teamRepository.saveAndFlush(newTeamEntity);
