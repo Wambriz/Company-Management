@@ -11,8 +11,82 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-color: #F24E1E;
+    border-radius: 1000%;
 }
 .error-message {
     color: red;
     margin-top: 10px;
   }
+
+form{
+    justify-content: center;
+    align-items: center; 
+}
+
+.textlabel {
+    width: 50px;
+    padding: 10px;
+    margin-top: 10px;
+    color: aliceblue;
+}
+
+.textfield {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #DEB992;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 500px;
+    transition: border-color 0.3s ease;
+    color: #1BA098;
+    display: flex;
+    text-align: center;
+}
+
+.textfield:focus {
+    outline: none;
+    border-bottom: 2px solid #1BA098;
+
+}
+
+.textfield::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+.button-group {
+    justify-content: space-between;
+}
+
+label{
+    margin-right: 10px;
+}
+
+select{
+    background-color: #DEB992;
+}
+
+button{
+    background-color: #1BA098;
+    border:  0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 100px;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: #14756f;
+}
+
+.cancel-button {
+    background-color: #F24E1E;
+}
+
+.close-button:hover{
+    background-color: #cf441a;
+}

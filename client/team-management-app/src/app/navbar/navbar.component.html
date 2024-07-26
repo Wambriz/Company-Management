@@ -1,7 +1,7 @@
 <nav>
     <div class="user-info">
-        <img class="" src="../../assets/images/login_icon.png" alt=""/>
-        <span *ngIf="isAdmin; else userInfo">Acting as admin</span>
+        <img class="mini-img" src="../../assets/images/login_icon.png" alt=""/>
+        <span class="admin-tag" *ngIf="isAdmin; else userInfo">Acting as admin</span>
         <ng-template #userInfo>{{ user?.profile?.firstname }} {{ user?.profile?.lastname?.[0] }}.</ng-template>
     </div>
     <a routerLink="/home-announcements">

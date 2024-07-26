@@ -48,9 +48,14 @@
 
 
 .login-container img {
-  width: 100%;
+  width: 80%;
   border-radius: 100px;
   background-color: #0D3A59;
+  padding: 10px;
+}
+
+img{
+  size-adjust: 50%;
 }
   
 .login-container div {

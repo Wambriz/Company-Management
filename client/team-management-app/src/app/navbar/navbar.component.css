@@ -18,13 +18,16 @@ nav {
 }
 
 .mini-img {
-    width: 100%;
+    width: 10%;
+    padding: 10px;
     border-radius: 100px;
     background-color: #051622;
 }
 
 .admin-tag {
     color: #F24E1E;
+    padding: 10px;
+    position: fixed;
 }
 
 .link {

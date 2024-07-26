@@ -4,16 +4,57 @@
     padding: 20px;
     text-align: center;
   }
-  
-  .users {
-    margin-top: 20px;
-    text-align: left;
+
+  h1{
+    color: #1BA098;
+    font-size: 300%;
   }
-  
-  .users th {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 10px;
+
+  p{
+    text-align: center;
+    color: #DEB992;
+    border-bottom: 2px solid #DEB992;
+  }
+
+  table{
+    width: 600px;
+    justify-content: center;
+    background: #0B2D45;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  th{
+    color: #1BA098;
+    border-bottom: 2px solid #DEB992;
+  }
+
+  tr{
+    text-align: center;
+    border-bottom: 2px solid #DEB992;
+  }
+
+  td{
+    color: aliceblue;
+    padding: 10px;
+    margin: 15px;
+  }
+
+  td.color-red{
+    color:red;
+  }
+
+  td.color-red.color-green{
+    color:green;
+  }
+
+  button{
+    background-color: #1BA098;
+    border:  0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 100px;
+    color: aliceblue;
   }
 
   .popup {
@@ -29,7 +70,7 @@
   }
   
   .popup app-add-user-overlay {
-    background-color: white;
+    background-color: #0B2D45;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
