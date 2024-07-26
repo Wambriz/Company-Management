@@ -2,15 +2,15 @@
   <h2>Create New Team</h2>
   <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="name">Team Name</label>
-      <input id="name" formControlName="name" />
+      <label class="textlabel" for="name">Team Name</label>
+      <input class="textfield" id="name" formControlName="name" />
     </div>
     <div>
-      <label for="description">Description</label>
-      <input id="description" formControlName="description" />
+      <label class="textlabel" for="description">Description</label>
+      <input class="textfield" id="description" formControlName="description" />
     </div>
     <button type="submit" [disabled]="validateInput()">Create</button>
-    <button type="button" (click)="close.emit()">Cancel</button>
+    <button class="cancel-button" type="button" (click)="close.emit()">Cancel</button>
     <div>
       <label for="teamMember">Select Team Member</label>
       <select id="teamMember" formControlName="selectedUser" (change)="selectMember()">
@@ -18,7 +18,7 @@
       </select>
     </div>
     <div class="selected-members">
-      <div *ngFor="let user of selectedMembers" (click)="removeMember(user)">
+      <div class="list" *ngFor="let user of selectedMembers" (click)="removeMember(user)">
         {{ user.profile.firstname }}
       </div>
     </div>
