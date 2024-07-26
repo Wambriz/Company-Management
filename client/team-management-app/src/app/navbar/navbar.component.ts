@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     //clear local storage on logout
     localStorage.clear();
+    this.routeguardsService.blockCompanyNavigation();
   }
 
   loadUsersPage() { //Route to users-reg

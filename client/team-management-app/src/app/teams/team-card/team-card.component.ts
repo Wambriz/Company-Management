@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { TeamDto } from '../../models';
+import { FullUserDto, TeamDto } from '../../models';
 import { BackendService } from '../../backend.service';
 import { RouteguardsService } from '../../../routeguards.service';
 import { Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class TeamCardComponent implements OnInit {
   listOfTeams: TeamDto[] = []; //This will represent all of the teams fetched from our backend
   projectCounts: { [teamId: string]: number } = {}; //New map of team id - project counts
+  user: FullUserDto | null = null;
+  isAdmin: boolean = false;
   @Output() close = new EventEmitter<void>();
 
   //INFO: TeamDto comes with id, name, description, and a list of users[], which are a list of [BasicUserDto]
@@ -23,6 +25,12 @@ export class TeamCardComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+
+    const userData = localStorage.getItem('user');
+  if (userData) {
+    this.user = JSON.parse(userData) as FullUserDto;
+    this.isAdmin = this.user.isAdmin;
+  }
     //OnInit actions here
     this.listOfTeams = await this.backendService.getListOfTeams(); //Get teams from backend (await on this promise to get the actual value)
 

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import { CredentialsDto, FullUserDto } from '../models';
+import { CompanyGuardService } from '../company-guard.service';
+import { RouteguardsService } from '../../routeguards.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private backendService: BackendService,
-    private router: Router
+    private router: Router,
+    private routeGuard: RouteguardsService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -47,6 +50,7 @@ export class LoginComponent {
       next: (user: FullUserDto) => {
         localStorage.setItem('user', JSON.stringify(user));
         if (user.isAdmin) {
+          this.routeGuard.allowCompanyNavigation();
           this.router.navigate(['/select-company']);
         } else {
           if (user.companies && user.companies.length > 0) {
